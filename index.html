@@ -22,11 +22,8 @@
       </div>
 
       <div class="flex items-center gap-2 flex-wrap">
-        <a href="storico_supermedia_brunorachiele.csv" download class="bg-slate-800 hover:bg-slate-700 text-xs font-bold px-3 py-2 rounded-lg border border-slate-700 inline-flex items-center gap-1.5">
-          <i class="fa-solid fa-file-csv text-emerald-400"></i> Scarica CSV Completo
-        </a>
         <button type="button" onclick="toggleAdminModal()" class="bg-blue-600 hover:bg-blue-500 text-xs font-extrabold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5 shadow">
-          <i class="fa-solid fa-plus"></i> Aggiungi Rilevazione
+          <i class="fa-solid fa-lock"></i> Area Gestione &amp; Caricamento
         </button>
       </div>
     </div>
@@ -78,8 +75,8 @@
     <section class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 class="text-lg font-black text-slate-900">Database Completo Rilevazioni</h2>
-          <p class="text-xs text-slate-500">Include tutti i partiti attuali e storici • Ogni riga è salvata in <code class="bg-slate-100 px-1.5 py-0.5 rounded">/rilevazioni/</code> e nel CSV globale</p>
+          <h2 class="text-lg font-black text-slate-900">Storico Completo Rilevazioni</h2>
+          <p class="text-xs text-slate-500">Elaborazione brunorachiele.it • Serie storica completa dal 2020 ad oggi</p>
         </div>
         <input id="search-date" type="text" oninput="renderTable()" placeholder="Filtra per data o anno (es. 2021, 2026)..." class="border border-slate-300 rounded-lg px-3 py-1.5 text-xs w-64">
       </div>
@@ -94,26 +91,36 @@
 
   </main>
 
-  <!-- Modale Aggiungi Rilevazione / Carica Sondaggio -->
+  <!-- Modale Privata Amministratore (protetta da Token GitHub) -->
   <div id="admin-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
     <div class="bg-white text-slate-900 rounded-2xl max-w-3xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between border-b pb-3">
         <div>
-          <h3 class="font-black text-lg">Carica Nuova Rilevazione su GitHub</h3>
-          <p class="text-xs text-slate-500">Crea il file in <code class="bg-slate-100 px-1 rounded">rilevazioni/AAAA-MM-GG.json</code> e aggiorna <code class="bg-slate-100 px-1 rounded">storico_supermedia_brunorachiele.csv</code></p>
+          <h3 class="font-black text-lg">Area Riservata — brunorachiele.it</h3>
+          <p class="text-xs text-slate-500">Accesso riservato con Token GitHub per caricamento rilevazioni e backup privato</p>
         </div>
         <button type="button" onclick="toggleAdminModal()" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
+          <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">GitHub Token (brunorachiele-it)</label>
+          <input id="in-token" type="password" oninput="updateTokenUI()" placeholder="github_pat_..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono">
+        </div>
+        <div>
           <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Data Rilevazione</label>
           <input id="in-date" type="date" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs font-bold">
         </div>
-        <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">GitHub Token (brunorachiele-it)</label>
-          <input id="in-token" type="password" placeholder="github_pat_..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono">
+      </div>
+
+      <!-- Download CSV riservato solo a chi ha inserito un Token GitHub valido -->
+      <div id="private-export-box" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2">
+        <div class="text-xs font-bold text-emerald-900">
+          <i class="fa-solid fa-shield-check mr-1 text-emerald-600"></i> Token attivo: puoi scaricare una copia privata del CSV aggiornato.
         </div>
+        <button type="button" onclick="downloadPrivateCSV()" class="bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-download"></i> Scarica CSV Privato
+        </button>
       </div>
 
       <!-- Incolla rapido da Google Fogli -->
@@ -205,7 +212,7 @@
     async function loadMasterCSV() {
       try {
         const res = await fetch(CSV_FILE + "?t=" + Date.now());
-        if (!res.ok) throw new Error("CSV non trovato (" + res.status + ")");
+        if (!res.ok) throw new Error("Archivio non trovato (" + res.status + ")");
         const text = await res.text();
         const lines = text.trim().split(/\r?\n/);
         allHeaders = parseCSVLine(lines[0]).map(function(h) { return h.trim(); }).filter(Boolean);
@@ -235,7 +242,7 @@
         renderChart();
         renderTable();
       } catch (err) {
-        document.getElementById("latest-date-title").textContent = "Errore caricamento CSV: " + err.message;
+        document.getElementById("latest-date-title").textContent = "Errore caricamento dati: " + err.message;
       }
     }
 
@@ -347,7 +354,7 @@
       const q = document.getElementById("search-date").value.trim().toLowerCase();
       document.getElementById("table-head").innerHTML = '<tr><th class="px-3 py-2.5 sticky left-0 bg-slate-900 z-20">Data</th>' +
         partyList.map(function(p) { return '<th class="px-2.5 py-2.5 text-right whitespace-nowrap" title="' + p.key + '">' + p.short + '</th>'; }).join("") +
-        '<th class="px-3 py-2.5 text-center">JSON</th></tr>';
+        '</tr>';
 
       const filtered = allRecords.slice().reverse().filter(function(r) { return !q || r.data_it.includes(q) || r.data.includes(q); });
       document.getElementById("table-body").innerHTML = filtered.map(function(r) {
@@ -357,9 +364,31 @@
             const v = r[p.key];
             return '<td class="px-2.5 py-2 text-right font-mono">' + (v !== null && v !== undefined ? v.toFixed(2).replace('.', ',') + '%' : '—') + '</td>';
           }).join("") +
-          '<td class="px-3 py-2 text-center"><a href="rilevazioni/' + r.data + '.json" target="_blank" class="text-blue-600 hover:underline font-bold">File</a></td>' +
         '</tr>';
       }).join("");
+    }
+
+    function updateTokenUI() {
+      const tok = document.getElementById("in-token").value.trim();
+      const box = document.getElementById("private-export-box");
+      if (tok.length > 15) box.classList.remove("hidden");
+      else box.classList.add("hidden");
+    }
+
+    async function downloadPrivateCSV() {
+      const token = document.getElementById("in-token").value.trim();
+      if (!token) { alert("Inserisci prima il Token GitHub."); return; }
+      const url = "https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/" + CSV_FILE;
+      const res = await fetch(url, {
+        headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github.raw" }
+      });
+      if (!res.ok) { alert("Token non autorizzato (" + res.status + ")"); return; }
+      const csvText = await res.text();
+      const blob = new Blob([csvText], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = CSV_FILE;
+      link.click();
     }
 
     function renderModalInputs(latest) {
@@ -378,6 +407,7 @@
       if (!m.classList.contains("hidden")) {
         document.getElementById("in-token").value = localStorage.getItem("br_gh_token") || "";
         document.getElementById("in-date").value = new Date().toISOString().slice(0, 10);
+        updateTokenUI();
         const latest = allRecords[allRecords.length - 1] || {};
         renderModalInputs(latest);
       }
