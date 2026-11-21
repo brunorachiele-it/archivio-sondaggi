@@ -1,0 +1,14 @@
+{
+  "data": "2021-01-02",
+  "data_it": "02/01/2021",
+  "tipo": "supermedia",
+  "fonte": "brunorachiele.it",
+  "partiti": {
+    "Lega": 23.65,
+    "Fratelli d'Italia": 16.47,
+    "Forza Italia": 7.4,
+    "Partito Democratico": 20.68,
+    "Italia Viva": 3.07,
+    "Movimento 5 Stelle": 14.42
+  }
+}

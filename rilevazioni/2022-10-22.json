@@ -1,0 +1,19 @@
+{
+  "data": "2022-10-22",
+  "data_it": "22/10/2022",
+  "tipo": "supermedia",
+  "fonte": "brunorachiele.it",
+  "partiti": {
+    "Lega": 8.75,
+    "Fratelli d'Italia": 28.0,
+    "Forza Italia": 7.5,
+    "Partito Democratico": 18.1,
+    "Italia Viva": 4.0,
+    "Movimento 5 Stelle": 16.7,
+    "Azione": 4.1,
+    "Alleanza Verdi-Sinistra": 3.8,
+    "+Europa": 3.3,
+    "Impegno Civico": 0.5,
+    "Noi Moderati": 1.0
+  }
+}
