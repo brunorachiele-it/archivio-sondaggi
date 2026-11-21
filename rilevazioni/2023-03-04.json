@@ -1,0 +1,21 @@
+{
+  "data": "2023-03-04",
+  "data_it": "04/03/2023",
+  "tipo": "supermedia",
+  "fonte": "brunorachiele.it",
+  "partiti": {
+    "Lega": 8.95,
+    "Fratelli d'Italia": 31.2,
+    "Forza Italia": 7.35,
+    "Partito Democratico": 16.35,
+    "Italia Viva": 3.65,
+    "Movimento 5 Stelle": 17.05,
+    "Azione": 3.65,
+    "Alleanza Verdi-Sinistra": 3.9,
+    "+Europa": 2.85,
+    "Impegno Civico": 0.9,
+    "Noi Moderati": 1.0,
+    "Italexit": 2.05,
+    "Unione Popolare": 1.6
+  }
+}
