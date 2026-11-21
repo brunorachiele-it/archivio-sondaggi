@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta name="robots" content="noindex, nofollow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Archivio Storico Sondaggi Politici — brunorachiele.it</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -44,19 +44,71 @@
       <div id="latest-cards" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
     </section>
 
+    <!-- Simulatore Interattivo Coalizioni (Stabilicum) -->
+    <section class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700">Strumento Interattivo • Camera 400 Seggi</span>
+          <h2 class="text-lg font-black text-slate-900">Simula la tua Coalizione (Legge Stabilicum)</h2>
+          <p class="text-xs text-slate-500">Seleziona i partiti dall'ultima Supermedia per calcolare voti e seggi (maggioranza 201 • premio 220 seggi sopra il 42%)</p>
+        </div>
+        <div class="flex gap-1.5 flex-wrap">
+          <button type="button" onclick="presetCoalition(['Fratelli d\'Italia','Forza Italia','Lega','Noi Moderati'])" class="text-[11px] font-bold bg-slate-900 text-white px-2.5 py-1 rounded-lg">Centrodestra</button>
+          <button type="button" onclick="presetCoalition(['Partito Democratico','Movimento 5 Stelle','Alleanza Verdi-Sinistra','+Europa','Italia Viva'])" class="text-[11px] font-bold bg-red-600 text-white px-2.5 py-1 rounded-lg">Campo Largo</button>
+          <button type="button" onclick="presetCoalition([])" class="text-[11px] font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">Azzera</button>
+        </div>
+      </div>
+
+      <div id="coalition-checkboxes" class="flex flex-wrap gap-2"></div>
+
+      <div class="bg-slate-900 text-white rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-6">
+          <div>
+            <div class="text-[11px] uppercase text-slate-400 font-bold">Totale Voti Coalizione</div>
+            <div id="sim-votes" class="text-2xl font-black text-white">0,00%</div>
+          </div>
+          <div>
+            <div class="text-[11px] uppercase text-slate-400 font-bold">Seggi Stimati Camera</div>
+            <div class="flex items-baseline gap-2">
+              <span id="sim-seats" class="text-2xl font-black text-blue-400">0</span>
+              <span class="text-xs text-slate-400">/ 400</span>
+            </div>
+          </div>
+        </div>
+        <div id="sim-badge" class="text-xs font-extrabold px-3.5 py-2 rounded-lg bg-slate-800 text-slate-300">
+          Seleziona almeno un partito per simulare
+        </div>
+      </div>
+    </section>
+
     <!-- Grafico Storico Interattivo -->
     <section class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 class="text-lg font-black text-slate-900">Andamento Storico delle Intenzioni di Voto</h2>
-          <p class="text-xs text-slate-500">Serie completa dal 2020 con tutti i partiti e gli eventi politici chiave • Passa il mouse sulle linee verticali per i dettagli</p>
+          <p class="text-xs text-slate-500">Serie completa dal 2020 con tutti i partiti e gli eventi politici chiave</p>
         </div>
-        <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl" id="range-buttons">
-          <button type="button" data-range="12" onclick="setRange(12, this)" class="range-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600">3 Mesi</button>
-          <button type="button" data-range="26" onclick="setRange(26, this)" class="range-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600">6 Mesi</button>
-          <button type="button" data-range="52" onclick="setRange(52, this)" class="range-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600">1 Anno</button>
-          <button type="button" data-range="0" onclick="setRange(0, this)" class="range-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm">Dal 2020</button>
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl" id="range-buttons">
+            <button type="button" data-range="12" onclick="setRange(12, this)" class="range-btn px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600">3 Mesi</button>
+            <button type="button" data-range="26" onclick="setRange(26, this)" class="range-btn px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600">6 Mesi</button>
+            <button type="button" data-range="52" onclick="setRange(52, this)" class="range-btn px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600">1 Anno</button>
+            <button type="button" data-range="0" onclick="setRange(0, this)" class="range-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm">Dal 2020</button>
+          </div>
+          <button type="button" onclick="downloadChartPNG()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl inline-flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-camera"></i> Scarica PNG
+          </button>
         </div>
+      </div>
+
+      <!-- Confronti Rapidi a 1 Clic -->
+      <div class="flex flex-wrap items-center gap-1.5 pt-1">
+        <span class="text-[11px] font-extrabold uppercase text-slate-400 mr-1"><i class="fa-solid fa-bolt text-amber-500"></i> Confronti rapidi:</span>
+        <button type="button" onclick="applyQuickStory('duello')" class="text-[11px] font-bold bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full">Testa a testa FdI vs PD (dal 2020)</button>
+        <button type="button" onclick="applyQuickStory('cdx')" class="text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 px-2.5 py-1 rounded-full">Equilibri Centrodestra (FdI • Lega • FI)</button>
+        <button type="button" onclick="applyQuickStory('csx')" class="text-[11px] font-bold bg-red-50 hover:bg-red-100 text-red-800 border border-red-200 px-2.5 py-1 rounded-full">Area Progressista (PD • M5S • AVS)</button>
+        <button type="button" onclick="applyQuickStory('centro')" class="text-[11px] font-bold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-2.5 py-1 rounded-full">Area Liberal-Democratica (Azione • IV • +Eu)</button>
+        <button type="button" onclick="applyQuickStory('all')" class="text-[11px] font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full">Tutti i 17 partiti</button>
       </div>
 
       <!-- Barra Controllo Eventi Politici -->
@@ -132,13 +184,11 @@
         <button type="button" onclick="toggleAdminModal()" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <!-- Token GitHub condiviso per entrambe le operazioni -->
       <div>
         <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">GitHub Token (brunorachiele-it)</label>
         <input id="in-token" type="password" oninput="updateTokenUI()" placeholder="github_pat_..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono">
       </div>
 
-      <!-- Download CSV riservato -->
       <div id="private-export-box" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 space-y-2">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="text-xs font-bold text-emerald-900">
@@ -151,7 +201,7 @@
         <div id="scheduled-admin-note" class="text-[11px] text-amber-800 font-semibold hidden"></div>
       </div>
 
-      <!-- Sezione 1: Aggiungi Evento Politico al Grafico -->
+      <!-- Aggiungi Evento Politico al Grafico -->
       <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3.5 space-y-2.5">
         <div class="flex items-center justify-between">
           <span class="text-xs font-black uppercase text-indigo-900"><i class="fa-solid fa-landmark mr-1"></i> Aggiungi Evento Politico al Grafico (Governi, Elezioni, Fatti)</span>
@@ -174,7 +224,7 @@
         </div>
       </div>
 
-      <!-- Sezione 2: Nuova Rilevazione Sondaggi -->
+      <!-- Nuova Rilevazione Sondaggi -->
       <div class="border-t pt-3 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <span class="text-xs font-black uppercase text-slate-800"><i class="fa-solid fa-chart-line mr-1 text-blue-600"></i> Carica Rilevazione Supermedia</span>
@@ -244,7 +294,6 @@
       evento: "#7c3aed"
     };
 
-    // Cronologia base degli eventi politici italiani dal 2020
     const DEFAULT_EVENTS = [
       { data: "2020-09-20", titolo: "Referendum Taglio Parlamentari & Regionali (7 Regioni)", tipo: "nazionali" },
       { data: "2021-01-13", titolo: "Crisi Governo Conte II (ritiro Italia Viva)", tipo: "governo" },
@@ -273,7 +322,8 @@
     let allRecords = [];
     let allEvents = DEFAULT_EVENTS.slice();
     let activeParties = new Set();
-    let currentRange = 0; // Default: Dal 2020
+    let simulatedCoalition = new Set(["Fratelli d'Italia", "Forza Italia", "Lega", "Noi Moderati"]);
+    let currentRange = 0;
     let chartInstance = null;
 
     function getTodayItalyISO() {
@@ -342,14 +392,11 @@
         const res = await fetch(EVENTS_FILE + "?t=" + Date.now());
         if (res.ok) {
           const extra = await res.json();
-          if (Array.isArray(extra)) {
-            mergeEvents(allEvents.concat(extra));
-          }
+          if (Array.isArray(extra)) mergeEvents(allEvents.concat(extra));
         }
       } catch (e) {}
     }
 
-    // Auto-aggiornamento leggero da Wikipedia Italia per nuove elezioni/governi futuri
     async function syncWikipediaElections() {
       try {
         const currentYear = parseInt(getTodayItalyISO().slice(0, 4), 10);
@@ -408,6 +455,7 @@
         }).sort(function(a, b) { return a.data.localeCompare(b.data); });
 
         renderLatestCards();
+        renderSimulator();
         renderPartyToggles();
         renderChart();
         renderTable();
@@ -443,6 +491,108 @@
       document.getElementById("latest-cards").innerHTML = cardsHtml;
     }
 
+    // Simulatore Stabilicum
+    function renderSimulator() {
+      const unlocked = getUnlockedRecords();
+      if (!unlocked.length) return;
+      const latest = unlocked[unlocked.length - 1];
+      const activeInLatest = partyList.filter(function(p) { return latest[p.key] !== null && latest[p.key] !== undefined; });
+
+      document.getElementById("coalition-checkboxes").innerHTML = activeInLatest.map(function(p) {
+        const checked = simulatedCoalition.has(p.key);
+        const safeKey = p.key.replace(/'/g, "\\'");
+        return '<button type="button" onclick="toggleSimParty(\'' + safeKey + '\')" class="px-3 py-1.5 rounded-xl text-xs font-bold border transition inline-flex items-center gap-1.5 ' +
+          (checked ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100') + '">' +
+          '<span class="w-2.5 h-2.5 rounded-full" style="background:' + p.color + '"></span>' +
+          p.key + ' (' + latest[p.key].toFixed(1).replace('.', ',') + '%)' +
+        '</button>';
+      }).join("");
+
+      let sum = 0;
+      simulatedCoalition.forEach(function(k) {
+        if (latest[k] !== null && latest[k] !== undefined) sum += latest[k];
+      });
+
+      document.getElementById("sim-votes").textContent = sum.toFixed(2).replace('.', ',') + "%";
+      let seats = 0;
+      const badgeEl = document.getElementById("sim-badge");
+      if (sum <= 0) {
+        seats = 0;
+        badgeEl.className = "text-xs font-extrabold px-3.5 py-2 rounded-lg bg-slate-800 text-slate-300";
+        badgeEl.textContent = "Seleziona almeno un partito per simulare";
+      } else if (sum >= 42) {
+        seats = 220;
+        badgeEl.className = "text-xs font-extrabold px-3.5 py-2 rounded-lg bg-emerald-600 text-white";
+        badgeEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Premio di Maggioranza (≥42%): 220 seggi — Maggioranza Assoluta';
+      } else {
+        seats = Math.round((sum / 100) * 319);
+        if (seats >= 201) {
+          badgeEl.className = "text-xs font-extrabold px-3.5 py-2 rounded-lg bg-emerald-600 text-white";
+          badgeEl.textContent = "Maggioranza raggiunta (≥201 seggi)";
+        } else {
+          badgeEl.className = "text-xs font-extrabold px-3.5 py-2 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40";
+          badgeEl.textContent = "Sotto soglia 42% (riparto proporzionale: mancano " + (201 - seats) + " seggi alla maggioranza)";
+        }
+      }
+      document.getElementById("sim-seats").textContent = seats;
+    }
+
+    function toggleSimParty(key) {
+      if (simulatedCoalition.has(key)) simulatedCoalition.delete(key);
+      else simulatedCoalition.add(key);
+      renderSimulator();
+    }
+
+    function presetCoalition(keys) {
+      simulatedCoalition = new Set(keys);
+      renderSimulator();
+    }
+
+    function applyQuickStory(mode) {
+      activeParties.clear();
+      if (mode === "duello") {
+        ["Fratelli d'Italia", "Partito Democratico"].forEach(function(k) { activeParties.add(k); });
+      } else if (mode === "cdx") {
+        ["Fratelli d'Italia", "Lega", "Forza Italia", "Noi Moderati", "Futuro Nazionale"].forEach(function(k) { activeParties.add(k); });
+      } else if (mode === "csx") {
+        ["Partito Democratico", "Movimento 5 Stelle", "Alleanza Verdi-Sinistra", "Articolo 1"].forEach(function(k) { activeParties.add(k); });
+      } else if (mode === "centro") {
+        ["Azione", "Italia Viva", "+Europa"].forEach(function(k) { activeParties.add(k); });
+      } else {
+        partyList.forEach(function(p) { activeParties.add(p.key); });
+      }
+      currentRange = 0;
+      document.querySelectorAll(".range-btn").forEach(function(b) {
+        if (b.dataset.range === "0") {
+          b.classList.add("bg-white", "text-blue-700", "shadow-sm");
+          b.classList.remove("text-slate-600");
+        } else {
+          b.classList.remove("bg-white", "text-blue-700", "shadow-sm");
+          b.classList.add("text-slate-600");
+        }
+      });
+      renderPartyToggles();
+      renderChart();
+    }
+
+    function downloadChartPNG() {
+      const srcCanvas = document.getElementById("history-chart");
+      const out = document.createElement("canvas");
+      out.width = srcCanvas.width;
+      out.height = srcCanvas.height + 44;
+      const ctx = out.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, out.width, out.height);
+      ctx.drawImage(srcCanvas, 0, 0);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "bold 14px sans-serif";
+      ctx.fillText("Archivio Storico Sondaggi Politici — Elaborazione brunorachiele.it", 16, out.height - 16);
+      const a = document.createElement("a");
+      a.href = out.toDataURL("image/png");
+      a.download = "storico-sondaggi-brunorachiele.png";
+      a.click();
+    }
+
     function renderToggleButtons(list) {
       return list.map(function(p) {
         const on = activeParties.has(p.key);
@@ -462,9 +612,7 @@
 
     function selectAllParties(enable) {
       activeParties.clear();
-      if (enable) {
-        partyList.forEach(function(p) { activeParties.add(p.key); });
-      }
+      if (enable) partyList.forEach(function(p) { activeParties.add(p.key); });
       renderPartyToggles();
       renderChart();
     }
@@ -487,7 +635,6 @@
       renderChart();
     }
 
-    // Associa ogni evento politico (non futuro) all'indice più vicino sull'asse X del grafico
     function mapEventsToSlice(slice) {
       if (!slice.length) return [];
       const minDate = slice[0].data;
@@ -521,7 +668,6 @@
       return mapped;
     }
 
-    // Plugin Chart.js per disegnare le linee verticali degli eventi politici
     const politicalEventsPlugin = {
       id: "politicalEventsPlugin",
       afterDatasetsDraw: function(chart) {
@@ -548,7 +694,6 @@
           ctx.stroke();
           ctx.setLineDash([]);
 
-          // Etichetta compatta alternata in alto
           const yOffset = yAxis.top + 10 + ((i % 3) * 14);
           const shortLabel = ev.titolo.length > 22 ? ev.titolo.slice(0, 21) + "…" : ev.titolo;
           ctx.font = "bold 9px sans-serif";
@@ -855,6 +1000,7 @@
           : "Fatto! Creato rilevazioni/" + isoDate + ".json e aggiornato " + CSV_FILE + ".";
         updateTokenUI();
         renderLatestCards();
+        renderSimulator();
         renderPartyToggles();
         renderChart();
         renderTable();
