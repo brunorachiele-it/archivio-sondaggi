@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Generatore Video TikTok Sondaggi — brunorachiele.it</title>
+  <title>Studio Video TikTok &amp; Reels — brunorachiele.it</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,54 +13,121 @@
   <div class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
     <!-- Pannello Controlli -->
-    <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+    <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-xl">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div>
-          <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400">Studio Video Verticale 9:16</span>
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400">Studio Video Verticale 9:16 • Teaser</span>
           <h1 class="text-xl font-black">Generatore Anteprime TikTok &amp; Reels</h1>
-          <p class="text-xs text-slate-400">Collegato in tempo reale all'archivio <span class="text-white font-semibold">brunorachiele.it</span></p>
+          <p class="text-xs text-slate-400">Anteprime ad alto impatto per <span class="text-white font-semibold">brunorachiele.it</span></p>
         </div>
         <a href="index.html" class="text-xs font-bold bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg">← Archivio</a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Data Rilevazione</label>
-          <select id="sel-date" onchange="onDateChange()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold"></select>
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Formato Video</label>
-          <select id="sel-mode" onchange="resetAnimation()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
-            <option value="top8">Classifica Principali Partiti (Top 8)</option>
-            <option value="all">Tutti i Partiti Attivi (12 partiti)</option>
-            <option value="movers">Chi Sale e Chi Scende (Variazioni)</option>
-            <option value="coalitions">Sfida Coalizioni (Centrodestra vs Campo Largo)</option>
-          </select>
+      <!-- Selettore Tipo di Video (3 Schede) -->
+      <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <button type="button" onclick="switchTab('partiti')" id="tab-partiti" class="tab-btn py-2 px-2 rounded-lg text-xs font-extrabold bg-blue-600 text-white shadow">
+          <i class="fa-solid fa-chart-simple mr-1"></i> Partiti
+        </button>
+        <button type="button" onclick="switchTab('leader')" id="tab-leader" class="tab-btn py-2 px-2 rounded-lg text-xs font-extrabold text-slate-400 hover:text-white">
+          <i class="fa-solid fa-user-tie mr-1"></i> Leader
+        </button>
+        <button type="button" onclick="switchTab('stabilicum')" id="tab-stabilicum" class="tab-btn py-2 px-2 rounded-lg text-xs font-extrabold text-slate-400 hover:text-white">
+          <i class="fa-solid fa-landmark mr-1"></i> Stabilicum
+        </button>
+      </div>
+
+      <!-- PANNELLO 1: PARTITI (TEASER) -->
+      <div id="panel-partiti" class="space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Data Rilevazione (da GitHub)</label>
+            <select id="sel-date" onchange="onDateChange()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold"></select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Taglio Anteprima (Non svela tutto)</label>
+            <select id="sel-partiti-submode" onchange="onPartitiModeChange()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
+              <option value="top3">Podio Top 3 + Card Bloccata</option>
+              <option value="duello">Duello Testa a Testa (1° vs 2°)</option>
+              <option value="movers3">Top 3 Variazioni (Chi sale / Chi scende)</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <!-- PANNELLO 2: GRADIMENTO LEADER -->
+      <div id="panel-leader" class="hidden space-y-3">
+        <div class="flex items-center justify-between">
+          <label class="text-[11px] font-bold uppercase text-slate-400">Incolla Gradimento Leader (Nome • % • Variazione opzionale)</label>
+          <span class="text-[10px] text-blue-400 font-bold">Mostra i primi 4 in classifica</span>
+        </div>
+        <textarea id="in-leader-data" rows="4" oninput="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs font-mono text-white">Giorgia Meloni&#9;43,5&#9;+0,3
+Antonio Tajani&#9;38,2&#9;+0,1
+Elly Schlein&#9;31,4&#9;-0,2
+Giuseppe Conte&#9;30,8&#9;0,0</textarea>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Sottotitolo / Data</label>
+            <input id="in-leader-sub" type="text" oninput="drawFrame(1)" value="GRADIMENTO LEADER POLITICI" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Mostra card bloccata finale</label>
+            <select id="sel-leader-lock" onchange="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold">
+              <option value="yes">Sì (Altri leader sul sito)</option>
+              <option value="no">No (Mostra solo i dati inseriti)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANNELLO 3: SCENARI STABILICUM -->
+      <div id="panel-stabilicum" class="hidden space-y-3">
+        <div class="flex items-center justify-between">
+          <label class="text-[11px] font-bold uppercase text-slate-400">Righe Scenario (Nome Coalizione/Lista • Voti % • Seggi Camera)</label>
+          <span class="text-[10px] text-emerald-400 font-bold">Soglia Maggioranza: 201</span>
+        </div>
+        <textarea id="in-stab-data" rows="4" oninput="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs font-mono text-white">CAMPO LARGO&#9;44,5&#9;220
+CENTRODESTRA&#9;43,6&#9;139
+FUTURO NAZIONALE&#9;5,6&#9;18
+AZIONE&#9;1,0&#9;3</textarea>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Etichetta Scenario</label>
+            <input id="in-stab-sub" type="text" oninput="drawFrame(1)" value="SIMULAZIONE STABILICUM • CAMERA" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Preset Veloce Scenario</label>
+            <select onchange="loadStabPreset(this.value)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold">
+              <option value="s1">Scenario 1: Coalizioni separate</option>
+              <option value="s2">Scenario 2: CDX + Futuro Nazionale</option>
+              <option value="s3">Scenario 3: Campo Largo + Terzo Polo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Impostazioni Grafiche Comuni -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-800">
         <div>
           <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Titolo Hook (in alto sul video)</label>
-          <input id="in-hook" type="text" oninput="drawFrame(1)" value="SONDAGGI POLITICI: CHI SALE E CHI SCENDE" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
+          <input id="in-hook" type="text" oninput="drawFrame(1)" value="SONDAGGI POLITICI: ECCO IL PODIO DELLA SETTIMANA" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Tema Grafico</label>
+          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Stile Sfondo</label>
           <select id="sel-theme" onchange="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
-            <option value="dark">Blu Istituzionale Scuro (Ad alto contrasto)</option>
+            <option value="dark">Blu Istituzionale Scuro (Consigliato TikTok)</option>
             <option value="light">Editoriale Chiaro (Stile brunorachiele.it)</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Call to Action finale (in basso)</label>
-        <input id="in-cta" type="text" oninput="drawFrame(1)" value="Tutti i grafici dal 2020 su brunorachiele.it" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs">
+        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Call to Action finale (Invito al sito)</label>
+        <input id="in-cta" type="text" oninput="drawFrame(1)" value="Tutti i dati completi su brunorachiele.it" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs">
       </div>
 
       <div class="flex flex-wrap gap-2.5 pt-2">
         <button type="button" onclick="playPreview()" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-extrabold py-3 px-4 rounded-xl inline-flex items-center justify-center gap-2">
-          <i class="fa-solid fa-play text-emerald-400"></i> Anteprima Animazione (12s)
+          <i class="fa-solid fa-play text-emerald-400"></i> Anteprima (10s)
         </button>
         <button type="button" id="btn-record" onclick="recordAndDownload()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-xs font-extrabold py-3 px-4 rounded-xl inline-flex items-center justify-center gap-2 shadow-lg">
           <i class="fa-solid fa-video"></i> Registra e Scarica Video
@@ -68,15 +135,11 @@
       </div>
 
       <div id="rec-status" class="hidden text-xs font-bold p-3 rounded-xl bg-blue-950/80 border border-blue-800 text-blue-200"></div>
-
-      <p class="text-[11px] text-slate-400 leading-relaxed">
-        <strong>Consiglio TikTok:</strong> carica il video scaricato direttamente sull'app TikTok, aggiungi un sottofondo musicale di tendenza a volume basso (10–15%) e incolla in descrizione la domanda per stimolare i commenti.
-      </p>
     </div>
 
     <!-- Anteprima Verticale 9:16 -->
     <div class="lg:col-span-6 flex flex-col items-center">
-      <div class="text-[11px] font-bold uppercase text-slate-400 mb-2">Anteprima Formato TikTok / Reels (1080×1920)</div>
+      <div class="text-[11px] font-bold uppercase text-slate-400 mb-2">Anteprima Formato TikTok / Reels / Shorts (1080×1920)</div>
       <div class="border-4 border-slate-800 rounded-[28px] overflow-hidden shadow-2xl bg-black" style="width: 324px; height: 576px;">
         <canvas id="tiktok-canvas" width="1080" height="1920" style="width: 324px; height: 576px; display: block;"></canvas>
       </div>
@@ -102,13 +165,25 @@
       "Sud Chiama Nord": "#7c3aed"
     };
 
-    const ACTIVE_KEYS = [
-      "Fratelli d'Italia", "Partito Democratico", "Movimento 5 Stelle",
-      "Forza Italia", "Lega", "Alleanza Verdi-Sinistra",
-      "Azione", "Italia Viva", "+Europa", "Noi Moderati",
-      "Futuro Nazionale", "Sud Chiama Nord"
-    ];
+    const PARTY_SIGLE = {
+      "Fratelli d'Italia": "FdI",
+      "Partito Democratico": "PD",
+      "Movimento 5 Stelle": "M5S",
+      "Forza Italia": "FI",
+      "Lega": "LEGA",
+      "Alleanza Verdi-Sinistra": "AVS",
+      "Azione": "AZ",
+      "Italia Viva": "IV",
+      "+Europa": "+EU",
+      "Noi Moderati": "NM",
+      "Futuro Nazionale": "FN",
+      "Sud Chiama Nord": "SCN"
+    };
 
+    const LEADER_COLORS = ["#0b4a9f", "#0284c7", "#dc2626", "#eab308", "#16a34a", "#7c3aed", "#db2777"];
+    const ACTIVE_KEYS = Object.keys(PARTY_COLORS);
+
+    let currentTab = "partiti";
     let records = [];
     let selectedIndex = 0;
     let animFrameId = null;
@@ -123,35 +198,62 @@
     }
 
     async function init() {
-      const res = await fetch(CSV_URL + "?t=" + Date.now());
-      const text = await res.text();
-      const lines = text.trim().split(/\r?\n/);
-      const headers = lines[0].split(",").map(function(h) { return h.trim(); });
-      const todayISO = getTodayItalyISO();
+      try {
+        const res = await fetch(CSV_URL + "?t=" + Date.now());
+        const text = await res.text();
+        const lines = text.trim().split(/\r?\n/);
+        const headers = lines[0].split(",").map(function(h) { return h.trim(); });
+        const todayISO = getTodayItalyISO();
 
-      records = lines.slice(1).map(function(l) {
-        const cols = l.split(",");
-        const obj = {};
-        headers.forEach(function(h, i) {
-          const v = (cols[i] || "").trim();
-          obj[h] = (h === "data" || h === "data_it") ? v : (v === "" ? null : parseFloat(v));
+        records = lines.slice(1).map(function(l) {
+          const cols = l.split(",");
+          const obj = {};
+          headers.forEach(function(h, i) {
+            const v = (cols[i] || "").trim();
+            obj[h] = (h === "data" || h === "data_it") ? v : (v === "" ? null : parseFloat(v));
+          });
+          return obj;
+        }).filter(function(r) {
+          return r.data && r.data <= todayISO;
+        }).sort(function(a, b) {
+          return a.data.localeCompare(b.data);
         });
-        return obj;
-      }).filter(function(r) {
-        return r.data && r.data <= todayISO;
-      }).sort(function(a, b) {
-        return a.data.localeCompare(b.data);
+
+        const sel = document.getElementById("sel-date");
+        records.slice().reverse().forEach(function(r, idx) {
+          const opt = document.createElement("option");
+          opt.value = records.length - 1 - idx;
+          opt.textContent = "Supermedia del " + r.data_it;
+          sel.appendChild(opt);
+        });
+        selectedIndex = records.length - 1;
+      } catch (e) {}
+      drawFrame(1);
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      ["partiti", "leader", "stabilicum"].forEach(function(t) {
+        const btn = document.getElementById("tab-" + t);
+        const panel = document.getElementById("panel-" + t);
+        if (t === tab) {
+          btn.className = "tab-btn py-2 px-2 rounded-lg text-xs font-extrabold bg-blue-600 text-white shadow";
+          panel.classList.remove("hidden");
+        } else {
+          btn.className = "tab-btn py-2 px-2 rounded-lg text-xs font-extrabold text-slate-400 hover:text-white";
+          panel.classList.add("hidden");
+        }
       });
 
-      const sel = document.getElementById("sel-date");
-      records.slice().reverse().forEach(function(r, idx) {
-        const opt = document.createElement("option");
-        opt.value = records.length - 1 - idx;
-        opt.textContent = "Supermedia del " + r.data_it;
-        sel.appendChild(opt);
-      });
-
-      selectedIndex = records.length - 1;
+      if (tab === "partiti") {
+        onPartitiModeChange();
+      } else if (tab === "leader") {
+        document.getElementById("in-hook").value = "CHI È IL LEADER PIÙ AMATO DAGLI ITALIANI?";
+        document.getElementById("in-cta").value = "La classifica completa dei leader su brunorachiele.it";
+      } else if (tab === "stabilicum") {
+        document.getElementById("in-hook").value = "CHI VINCE CON LA NUOVA LEGGE STABILICUM?";
+        document.getElementById("in-cta").value = "Guarda tutti gli scenari di voto su brunorachiele.it";
+      }
       drawFrame(1);
     }
 
@@ -160,55 +262,29 @@
       drawFrame(1);
     }
 
-    function resetAnimation() {
+    function onPartitiModeChange() {
+      const sub = document.getElementById("sel-partiti-submode").value;
+      if (sub === "top3") {
+        document.getElementById("in-hook").value = "SONDAGGI POLITICI: ECCO IL PODIO DELLA SETTIMANA";
+      } else if (sub === "duello") {
+        document.getElementById("in-hook").value = "TESTA A TESTA NEI SONDAGGI: CHI È DAVANTI?";
+      } else {
+        document.getElementById("in-hook").value = "CHI SALE E CHI SCENDE NEI SONDAGGI OGGI";
+      }
+      document.getElementById("in-cta").value = "Tutti i partiti e lo storico dal 2020 su brunorachiele.it";
       drawFrame(1);
     }
 
-    function getItemsForMode() {
-      const cur = records[selectedIndex];
-      const prev = selectedIndex > 0 ? records[selectedIndex - 1] : null;
-      const mode = document.getElementById("sel-mode").value;
-
-      if (mode === "coalitions") {
-        const cdxKeys = ["Fratelli d'Italia", "Forza Italia", "Lega", "Noi Moderati"];
-        const clKeys = ["Partito Democratico", "Movimento 5 Stelle", "Alleanza Verdi-Sinistra", "+Europa", "Italia Viva"];
-        const sumKeys = function(row, ks) {
-          if (!row) return 0;
-          return ks.reduce(function(acc, k) { return acc + (row[k] || 0); }, 0);
-        };
-        const cdxNow = +sumKeys(cur, cdxKeys).toFixed(2);
-        const cdxPrev = prev ? +sumKeys(prev, cdxKeys).toFixed(2) : null;
-        const clNow = +sumKeys(cur, clKeys).toFixed(2);
-        const clPrev = prev ? +sumKeys(prev, clKeys).toFixed(2) : null;
-        const fnNow = cur["Futuro Nazionale"] || 0;
-        const azNow = cur["Azione"] || 0;
-
-        return [
-          { name: "Centrodestra (FdI·FI·Lega·NM)", val: cdxNow, diff: cdxPrev !== null ? +(cdxNow - cdxPrev).toFixed(2) : 0, color: "#0f294a" },
-          { name: "Campo Largo (PD·M5S·AVS·IV·+Eu)", val: clNow, diff: clPrev !== null ? +(clNow - clPrev).toFixed(2) : 0, color: "#dc2626" },
-          { name: "Futuro Nazionale", val: fnNow, diff: prev && prev["Futuro Nazionale"] !== null ? +(fnNow - prev["Futuro Nazionale"]).toFixed(2) : 0, color: "#475569" },
-          { name: "Azione", val: azNow, diff: prev && prev["Azione"] !== null ? +(azNow - prev["Azione"]).toFixed(2) : 0, color: "#2563eb" }
-        ].sort(function(a, b) { return b.val - a.val; });
-      }
-
-      let items = ACTIVE_KEYS.filter(function(k) {
-        return cur[k] !== null && cur[k] !== undefined;
-      }).map(function(k) {
-        const v = cur[k];
-        const pv = prev ? prev[k] : null;
-        const diff = (pv !== null && pv !== undefined) ? +(v - pv).toFixed(2) : 0;
-        return { name: k, val: v, diff: diff, color: PARTY_COLORS[k] || "#2563eb" };
-      });
-
-      if (mode === "movers") {
-        items = items.filter(function(it) { return it.diff !== 0; })
-          .sort(function(a, b) { return Math.abs(b.diff) - Math.abs(a.diff); })
-          .slice(0, 8);
+    function loadStabPreset(val) {
+      const ta = document.getElementById("in-stab-data");
+      if (val === "s1") {
+        ta.value = "CAMPO LARGO\t44,5\t220\nCENTRODESTRA\t43,6\t139\nFUTURO NAZIONALE\t5,6\t18\nAZIONE\t1,0\t3";
+      } else if (val === "s2") {
+        ta.value = "CENTRODESTRA + FN\t49,2\t220\nCAMPO LARGO\t38,3\t122\nITALIA VIVA\t6,1\t20\nAZIONE\t1,0\t3";
       } else {
-        items.sort(function(a, b) { return b.val - a.val; });
-        if (mode === "top8") items = items.slice(0, 8);
+        ta.value = "CENTRODESTRA + FN\t49,2\t220\nCAMPO LARGO + TERZO POLO\t45,5\t145";
       }
-      return items;
+      drawFrame(1);
     }
 
     function roundRect(ctx, x, y, w, h, r) {
@@ -243,23 +319,58 @@
       return curY;
     }
 
-    // progress da 0 a 1
+    function getInitials(name) {
+      const parts = name.trim().split(/\s+/);
+      if (parts.length === 1) return parts[0].slice(0, 3).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function drawLockedTeaserCard(ctx, y, isDark, labelText, subText, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = isDark ? "rgba(30, 41, 59, 0.55)" : "#f1f5f9";
+      roundRect(ctx, 70, y, 940, 145, 24);
+      ctx.fill();
+
+      ctx.setLineDash([10, 8]);
+      ctx.strokeStyle = isDark ? "#475569" : "#94a3b8";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Cerchio lucchetto
+      ctx.fillStyle = "#2563eb";
+      ctx.beginPath();
+      ctx.arc(145, y + 72, 36, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "900 32px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("🔒", 145, y + 83);
+      ctx.textAlign = "left";
+
+      ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
+      ctx.font = "800 32px sans-serif";
+      ctx.fillText(labelText, 205, y + 66);
+
+      ctx.fillStyle = isDark ? "#93c5fd" : "#0b4a9f";
+      ctx.font = "700 25px sans-serif";
+      ctx.fillText(subText, 205, y + 106);
+      ctx.restore();
+    }
+
     function drawFrame(progress) {
       const canvas = document.getElementById("tiktok-canvas");
       const ctx = canvas.getContext("2d");
       const W = 1080, H = 1920;
-      const cur = records[selectedIndex];
-      if (!cur) return;
-
       const isDark = document.getElementById("sel-theme").value === "dark";
-      const hookText = document.getElementById("in-hook").value.trim() || "SUPERMEDIA SONDAGGI POLITICI";
+      const hookText = document.getElementById("in-hook").value.trim() || "SONDAGGI POLITICI";
       const ctaText = document.getElementById("in-cta").value.trim() || "brunorachiele.it";
-      const items = getItemsForMode();
 
       // Sfondo
       if (isDark) {
         const grad = ctx.createLinearGradient(0, 0, 0, H);
-        grad.addColorStop(0, "#090f1f");
+        grad.addColorStop(0, "#080e1e");
         grad.addColorStop(1, "#0f172a");
         ctx.fillStyle = grad;
       } else {
@@ -267,106 +378,336 @@
       }
       ctx.fillRect(0, 0, W, H);
 
-      // Barra superiore brand
+      // Pill Brand
       ctx.fillStyle = "#0b4a9f";
-      roundRect(ctx, 70, 120, 420, 64, 32);
+      roundRect(ctx, 70, 120, 410, 62, 31);
       ctx.fill();
       ctx.fillStyle = "#ffffff";
-      ctx.font = "900 30px sans-serif";
-      ctx.fillText("BRUNORACHIELE.IT", 108, 163);
+      ctx.font = "900 28px sans-serif";
+      ctx.fillText("BRUNORACHIELE.IT", 106, 161);
 
-      // Data rilevazione pill
+      // Pill Categoria / Data
+      let pillRightText = "SUPERMEDIA";
+      if (currentTab === "partiti" && records[selectedIndex]) {
+        pillRightText = "SUPERMEDIA • " + records[selectedIndex].data_it;
+      } else if (currentTab === "leader") {
+        pillRightText = document.getElementById("in-leader-sub").value.trim().toUpperCase() || "GRADIMENTO LEADER";
+      } else if (currentTab === "stabilicum") {
+        pillRightText = document.getElementById("in-stab-sub").value.trim().toUpperCase() || "SIMULAZIONE STABILICUM";
+      }
+
       ctx.fillStyle = isDark ? "#1e293b" : "#e2e8f0";
-      roundRect(ctx, 515, 120, 495, 64, 32);
+      roundRect(ctx, 500, 120, 510, 62, 31);
       ctx.fill();
       ctx.fillStyle = isDark ? "#93c5fd" : "#0f172a";
-      ctx.font = "800 28px sans-serif";
-      ctx.fillText("SUPERMEDIA • " + cur.data_it, 550, 163);
+      ctx.font = "800 24px sans-serif";
+      ctx.fillText(pillRightText.slice(0, 28), 530, 160);
 
       // Titolo Hook
       ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
       ctx.font = "900 58px sans-serif";
       const endTitleY = wrapText(ctx, hookText.toUpperCase(), 70, 275, 940, 72);
 
-      // Linea divisoria
-      const startY = endTitleY + 55;
+      const startY = endTitleY + 60;
       ctx.fillStyle = "#2563eb";
-      ctx.fillRect(70, startY - 22, 140, 8);
+      ctx.fillRect(70, startY - 26, 150, 8);
 
-      // Calcolo altezza card dinamica in base al numero di partiti
-      const availH = 1660 - startY;
-      const gap = items.length > 9 ? 14 : 22;
-      const cardH = Math.min(135, Math.floor((availH - gap * (items.length - 1)) / items.length));
-      const maxVal = Math.max.apply(null, items.map(function(it) { return it.val; }).concat([30]));
+      // === RENDER 1: PARTITI (SOLO ANTEPRIMA TEASER) ===
+      if (currentTab === "partiti" && records[selectedIndex]) {
+        const cur = records[selectedIndex];
+        const prev = selectedIndex > 0 ? records[selectedIndex - 1] : null;
+        const submode = document.getElementById("sel-partiti-submode").value;
 
-      items.forEach(function(it, idx) {
-        // Animazione sfalsata per ciascuna riga
-        const itemDelay = idx * 0.055;
-        const localP = Math.max(0, Math.min(1, (progress - itemDelay) / 0.45));
-        const ease = 1 - Math.pow(1 - localP, 3);
+        let items = ACTIVE_KEYS.filter(function(k) {
+          return cur[k] !== null && cur[k] !== undefined;
+        }).map(function(k) {
+          const v = cur[k];
+          const pv = prev ? prev[k] : null;
+          const diff = (pv !== null && pv !== undefined) ? +(v - pv).toFixed(2) : 0;
+          return { name: k, sigla: PARTY_SIGLE[k] || k.slice(0, 3), val: v, diff: diff, color: PARTY_COLORS[k] || "#2563eb" };
+        });
 
-        const y = startY + idx * (cardH + gap);
-
-        // Sfondo card
-        ctx.fillStyle = isDark ? "rgba(30, 41, 59, 0.85)" : "#ffffff";
-        roundRect(ctx, 70, y, 940, cardH, 22);
-        ctx.fill();
-
-        if (!isDark) {
-          ctx.strokeStyle = "#e2e8f0";
-          ctx.lineWidth = 3;
-          ctx.stroke();
+        if (submode === "movers3") {
+          items = items.filter(function(it) { return it.diff !== 0; })
+            .sort(function(a, b) { return Math.abs(b.diff) - Math.abs(a.diff); })
+            .slice(0, 3);
+        } else {
+          items.sort(function(a, b) { return b.val - a.val; });
+          items = items.slice(0, submode === "duello" ? 2 : 3);
         }
 
-        // Bordo laterale colore partito
-        ctx.fillStyle = it.color;
-        roundRect(ctx, 70, y, 22, cardH, 10);
-        ctx.fill();
+        const maxVal = Math.max.apply(null, items.map(function(it) { return it.val; }).concat([30]));
+        const cardH = submode === "duello" ? 235 : 195;
+        const gap = 26;
 
-        // Nome partito
-        ctx.fillStyle = isDark ? "#f8fafc" : "#0f172a";
-        ctx.font = "800 " + (cardH < 100 ? "30px" : "34px") + " sans-serif";
-        ctx.fillText(it.name, 114, y + Math.round(cardH * 0.43));
+        items.forEach(function(it, idx) {
+          const localP = Math.max(0, Math.min(1, (progress - idx * 0.12) / 0.55));
+          const ease = 1 - Math.pow(1 - localP, 3);
+          const y = startY + idx * (cardH + gap);
 
-        // Barra animata
-        const barX = 114;
-        const barY = y + Math.round(cardH * 0.58);
-        const barMaxW = 540;
-        const barH = cardH < 100 ? 16 : 22;
+          ctx.fillStyle = isDark ? "rgba(30, 41, 59, 0.9)" : "#ffffff";
+          roundRect(ctx, 70, y, 940, cardH, 26);
+          ctx.fill();
+          if (!isDark) {
+            ctx.strokeStyle = "#e2e8f0";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          }
 
-        ctx.fillStyle = isDark ? "#0f172a" : "#e2e8f0";
-        roundRect(ctx, barX, barY, barMaxW, barH, barH / 2);
-        ctx.fill();
+          // Medaglione sigla partito
+          const badgeBg = (it.color === "#0f294a" && isDark) ? "#1d4ed8" : it.color;
+          ctx.fillStyle = badgeBg;
+          ctx.beginPath();
+          ctx.arc(150, y + cardH / 2, 46, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "900 28px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(it.sigla, 150, y + cardH / 2 + 10);
+          ctx.textAlign = "left";
 
-        const fillW = Math.max(12, (it.val / maxVal) * barMaxW * ease);
-        ctx.fillStyle = it.color === "#0f294a" && isDark ? "#38bdf8" : it.color;
-        roundRect(ctx, barX, barY, fillW, barH, barH / 2);
-        ctx.fill();
+          // Nome partito
+          ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
+          ctx.font = "900 38px sans-serif";
+          ctx.fillText(it.name, 222, y + 76);
 
-        // Percentuale animata a destra
-        const dispVal = (it.val * ease).toFixed(2).replace(".", ",") + "%";
-        ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-        ctx.font = "900 " + (cardH < 100 ? "38px" : "44px") + " sans-serif";
-        ctx.textAlign = "right";
-        ctx.fillText(dispVal, 980, y + Math.round(cardH * 0.48));
+          // Barra
+          const barY = y + cardH - 64;
+          const barMaxW = 470;
+          ctx.fillStyle = isDark ? "#0f172a" : "#e2e8f0";
+          roundRect(ctx, 222, barY, barMaxW, 24, 12);
+          ctx.fill();
 
-        // Badge variazione settimanale
-        let diffTxt = "= 0,00";
-        let diffColor = isDark ? "#94a3b8" : "#64748b";
-        if (it.diff > 0) {
-          diffTxt = "▲ +" + it.diff.toFixed(2).replace(".", ",");
-          diffColor = "#22c55e";
-        } else if (it.diff < 0) {
-          diffTxt = "▼ " + it.diff.toFixed(2).replace(".", ",");
-          diffColor = "#ef4444";
+          ctx.fillStyle = (it.color === "#0f294a" && isDark) ? "#38bdf8" : it.color;
+          roundRect(ctx, 222, barY, Math.max(16, (it.val / maxVal) * barMaxW * ease), 24, 12);
+          ctx.fill();
+
+          // Percentuale
+          ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
+          ctx.font = "900 54px sans-serif";
+          ctx.textAlign = "right";
+          ctx.fillText((it.val * ease).toFixed(2).replace(".", ",") + "%", 975, y + 84);
+
+          // Variazione
+          let diffTxt = "= 0,00";
+          let diffCol = isDark ? "#94a3b8" : "#64748b";
+          if (it.diff > 0) { diffTxt = "▲ +" + it.diff.toFixed(2).replace(".", ","); diffCol = "#22c55e"; }
+          else if (it.diff < 0) { diffTxt = "▼ " + it.diff.toFixed(2).replace(".", ","); diffCol = "#ef4444"; }
+          ctx.fillStyle = diffCol;
+          ctx.font = "800 32px sans-serif";
+          ctx.fillText(diffTxt, 975, y + cardH - 42);
+          ctx.textAlign = "left";
+        });
+
+        // Card bloccata per generare curiosità
+        const lockY = startY + items.length * (cardH + gap);
+        const lockAlpha = Math.max(0, Math.min(1, (progress - 0.45) / 0.4));
+        drawLockedTeaserCard(
+          ctx,
+          lockY,
+          isDark,
+          "Altri 9 partiti e variazioni",
+          "Scopri la classifica completa su brunorachiele.it",
+          lockAlpha
+        );
+      }
+
+      // === RENDER 2: GRADIMENTO LEADER ===
+      if (currentTab === "leader") {
+        const raw = document.getElementById("in-leader-data").value.trim();
+        const showLock = document.getElementById("sel-leader-lock").value === "yes";
+        const leaders = raw.split(/\r?\n/).map(function(line, i) {
+          const p = line.split(/\t|;/).map(function(s) { return s.trim(); }).filter(Boolean);
+          if (p.length < 2) return null;
+          const val = parseFloat(p[1].replace(",", ".").replace("%", ""));
+          const diff = p[2] ? parseFloat(p[2].replace(",", ".").replace("%", "")) : 0;
+          if (isNaN(val)) return null;
+          return {
+            name: p[0],
+            initials: getInitials(p[0]),
+            val: val,
+            diff: isNaN(diff) ? 0 : diff,
+            color: LEADER_COLORS[i % LEADER_COLORS.length]
+          };
+        }).filter(Boolean).slice(0, 4);
+
+        const maxVal = Math.max.apply(null, leaders.map(function(l) { return l.val; }).concat([50]));
+        const cardH = 185;
+        const gap = 22;
+
+        leaders.forEach(function(ld, idx) {
+          const localP = Math.max(0, Math.min(1, (progress - idx * 0.1) / 0.5));
+          const ease = 1 - Math.pow(1 - localP, 3);
+          const y = startY + idx * (cardH + gap);
+
+          ctx.fillStyle = isDark ? "rgba(30, 41, 59, 0.9)" : "#ffffff";
+          roundRect(ctx, 70, y, 940, cardH, 24);
+          ctx.fill();
+          if (!isDark) {
+            ctx.strokeStyle = "#e2e8f0";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          }
+
+          // Cerchio iniziale leader
+          ctx.fillStyle = ld.color;
+          ctx.beginPath();
+          ctx.arc(148, y + cardH / 2, 44, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "900 30px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(ld.initials, 148, y + cardH / 2 + 11);
+          ctx.textAlign = "left";
+
+          // Nome leader
+          ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
+          ctx.font = "900 38px sans-serif";
+          ctx.fillText(ld.name, 218, y + 74);
+
+          // Barra gradimento
+          const barY = y + cardH - 60;
+          const barMaxW = 475;
+          ctx.fillStyle = isDark ? "#0f172a" : "#e2e8f0";
+          roundRect(ctx, 218, barY, barMaxW, 22, 11);
+          ctx.fill();
+
+          ctx.fillStyle = ld.color;
+          roundRect(ctx, 218, barY, Math.max(16, (ld.val / maxVal) * barMaxW * ease), 22, 11);
+          ctx.fill();
+
+          // Percentuale
+          ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
+          ctx.font = "900 52px sans-serif";
+          ctx.textAlign = "right";
+          ctx.fillText((ld.val * ease).toFixed(1).replace(".", ",") + "%", 975, y + 80);
+
+          let diffTxt = "= 0,0";
+          let diffCol = isDark ? "#94a3b8" : "#64748b";
+          if (ld.diff > 0) { diffTxt = "▲ +" + ld.diff.toFixed(1).replace(".", ","); diffCol = "#22c55e"; }
+          else if (ld.diff < 0) { diffTxt = "▼ " + ld.diff.toFixed(1).replace(".", ","); diffCol = "#ef4444"; }
+          ctx.fillStyle = diffCol;
+          ctx.font = "800 30px sans-serif";
+          ctx.fillText(diffTxt, 975, y + cardH - 38);
+          ctx.textAlign = "left";
+        });
+
+        if (showLock) {
+          const lockY = startY + leaders.length * (cardH + gap);
+          const lockAlpha = Math.max(0, Math.min(1, (progress - 0.5) / 0.4));
+          drawLockedTeaserCard(
+            ctx,
+            lockY,
+            isDark,
+            "Tutti gli altri leader politici",
+            "Consulta la rilevazione integrale su brunorachiele.it",
+            lockAlpha
+          );
         }
-        ctx.fillStyle = diffColor;
-        ctx.font = "800 " + (cardH < 100 ? "24px" : "28px") + " sans-serif";
-        ctx.fillText(diffTxt, 980, y + Math.round(cardH * 0.82));
-        ctx.textAlign = "left";
-      });
+      }
 
-      // Footer Call-to-Action (sopra la zona UI inferiore di TikTok)
+      // === RENDER 3: SCENARI STABILICUM ===
+      if (currentTab === "stabilicum") {
+        const raw = document.getElementById("in-stab-data").value.trim();
+        const stabColors = ["#0b4a9f", "#dc2626", "#475569", "#2563eb", "#16a34a"];
+        const rows = raw.split(/\r?\n/).map(function(line, i) {
+          const p = line.split(/\t|;/).map(function(s) { return s.trim(); }).filter(Boolean);
+          if (p.length < 3) return null;
+          const votes = parseFloat(p[1].replace(",", ".").replace("%", ""));
+          const seats = parseInt(p[2], 10);
+          if (isNaN(votes) || isNaN(seats)) return null;
+          return {
+            name: p[0],
+            votes: votes,
+            seats: seats,
+            majority: seats >= 201,
+            color: stabColors[i % stabColors.length]
+          };
+        }).filter(Boolean).slice(0, 4);
+
+        const cardH = 225;
+        const gap = 24;
+
+        rows.forEach(function(rw, idx) {
+          const localP = Math.max(0, Math.min(1, (progress - idx * 0.12) / 0.5));
+          const ease = 1 - Math.pow(1 - localP, 3);
+          const y = startY + idx * (cardH + gap);
+
+          ctx.fillStyle = isDark ? "rgba(30, 41, 59, 0.92)" : "#ffffff";
+          roundRect(ctx, 70, y, 940, cardH, 24);
+          ctx.fill();
+
+          if (rw.majority) {
+            ctx.strokeStyle = "#22c55e";
+            ctx.lineWidth = 5;
+            ctx.stroke();
+          } else if (!isDark) {
+            ctx.strokeStyle = "#e2e8f0";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          }
+
+          // Nome coalizione/lista
+          ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
+          ctx.font = "900 34px sans-serif";
+          ctx.fillText(rw.name, 106, y + 66);
+
+          // Pill Voti %
+          ctx.fillStyle = isDark ? "#0f172a" : "#f1f5f9";
+          roundRect(ctx, 106, y + 86, 175, 44, 12);
+          ctx.fill();
+          ctx.fillStyle = isDark ? "#93c5fd" : "#0b4a9f";
+          ctx.font = "800 26px sans-serif";
+          ctx.fillText("Voti: " + rw.votes.toFixed(1).replace(".", ",") + "%", 122, y + 116);
+
+          // Badge Maggioranza se >= 201 seggi
+          if (rw.majority) {
+            ctx.fillStyle = "#16a34a";
+            roundRect(ctx, 298, y + 86, 260, 44, 12);
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "900 22px sans-serif";
+            ctx.fillText("✓ MAGGIORANZA", 322, y + 116);
+          }
+
+          // Seggi animati a destra
+          const dispSeats = Math.round(rw.seats * ease);
+          ctx.fillStyle = rw.majority ? "#22c55e" : (isDark ? "#ffffff" : "#0f172a");
+          ctx.font = "900 62px sans-serif";
+          ctx.textAlign = "right";
+          ctx.fillText(dispSeats, 975, y + 86);
+          ctx.fillStyle = isDark ? "#94a3b8" : "#64748b";
+          ctx.font = "700 24px sans-serif";
+          ctx.fillText("seggi su 400", 975, y + 120);
+          ctx.textAlign = "left";
+
+          // Barra seggi con tacca soglia 201
+          const barX = 106;
+          const barY = y + cardH - 54;
+          const barMaxW = 868;
+          ctx.fillStyle = isDark ? "#0f172a" : "#e2e8f0";
+          roundRect(ctx, barX, barY, barMaxW, 24, 12);
+          ctx.fill();
+
+          const fillW = Math.max(14, (rw.seats / 400) * barMaxW * ease);
+          ctx.fillStyle = rw.majority ? "#22c55e" : (rw.color === "#0b4a9f" && isDark ? "#38bdf8" : rw.color);
+          roundRect(ctx, barX, barY, fillW, 24, 12);
+          ctx.fill();
+
+          // Tacca verticale soglia 201 seggi
+          const threshX = barX + (201 / 400) * barMaxW;
+          ctx.fillStyle = "#f59e0b";
+          ctx.fillRect(threshX - 2, barY - 8, 4, 40);
+        });
+
+        // Legenda soglia 201
+        const noteY = startY + rows.length * (cardH + gap) + 18;
+        ctx.fillStyle = "#f59e0b";
+        ctx.font = "800 26px sans-serif";
+        ctx.fillText("▲ Linea gialla: Soglia maggioranza assoluta (201 seggi) • Premio al 42%", 70, noteY);
+      }
+
+      // Footer Call-to-Action
       ctx.fillStyle = "#2563eb";
       roundRect(ctx, 70, 1700, 940, 88, 24);
       ctx.fill();
@@ -379,7 +720,7 @@
 
     function playPreview(onComplete) {
       if (animFrameId) cancelAnimationFrame(animFrameId);
-      const duration = 11000; // 11 secondi
+      const duration = 9500;
       const start = performance.now();
 
       function step(now) {
@@ -406,7 +747,7 @@
 
       btn.disabled = true;
       status.classList.remove("hidden");
-      status.textContent = "Registrazione video in corso (12 secondi)... non cambiare scheda.";
+      status.textContent = "Registrazione video in corso (11 secondi)... non cambiare scheda.";
 
       const stream = canvas.captureStream(30);
       const mimeTypes = ["video/mp4", "video/webm;codecs=vp9", "video/webm"];
@@ -430,12 +771,11 @@
         const blob = new Blob(chunks, { type: selectedMime || "video/webm" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        const cur = records[selectedIndex];
         a.href = url;
-        a.download = "tiktok-sondaggi-" + (cur ? cur.data : "brunorachiele") + "." + ext;
+        a.download = "tiktok-" + currentTab + "-brunorachiele." + ext;
         a.click();
 
-        status.textContent = "Video scaricato! Pronto da caricare su TikTok, Reels o YouTube Shorts.";
+        status.textContent = "Video scaricato! Pronto da caricare su TikTok, Reels o Shorts.";
         btn.disabled = false;
       };
 
