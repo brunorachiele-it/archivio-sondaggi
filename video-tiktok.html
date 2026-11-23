@@ -18,11 +18,32 @@
         <div class="flex items-center gap-3">
           <img src="https://static.brunorachiele.it/logo.png" alt="brunorachiele.it" class="w-9 h-9 rounded-lg bg-white p-1 object-contain">
           <div>
-            <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400">Regia Video Verticale 9:16 • HD 1080×1920</span>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400">Regia Video Verticale 9:16 • Safe Zone TikTok</span>
             <h1 class="text-xl font-black">Studio Anteprime TikTok, Reels &amp; Shorts</h1>
           </div>
         </div>
         <a href="index.html" class="text-xs font-bold bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg">← Archivio</a>
+      </div>
+
+      <!-- IMPORTATORE AUTOMATICO DA LINK ARTICOLO BRUNORACHIELE.IT -->
+      <div class="bg-slate-950 border border-blue-900/60 rounded-xl p-3.5 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Importa dati in automatico da brunorachiele.it
+          </span>
+          <span id="import-badge" class="text-[10px] text-slate-400">Incolla link o scegli un post recente</span>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <select id="sel-recent-posts" onchange="onSelectRecentPost(this.value)" class="sm:w-1/2 bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-2 text-xs font-bold text-slate-200">
+            <option value="">Caricamento ultimi articoli dal sito...</option>
+          </select>
+          <div class="flex flex-1 gap-1.5">
+            <input id="in-post-url" type="url" placeholder="Oppure incolla qui l'URL del post..." class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
+            <button type="button" onclick="importFromUrl()" class="bg-blue-600 hover:bg-blue-500 px-3.5 py-2 rounded-lg text-xs font-extrabold whitespace-nowrap">
+              Importa
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- 4 Schede Format Video -->
@@ -41,7 +62,7 @@
         </button>
       </div>
 
-      <!-- PANNELLO 1: SONDAGGI PARTITI (CON LOGHI REALI) -->
+      <!-- PANNELLO 1: SONDAGGI PARTITI -->
       <div id="panel-partiti" class="space-y-3">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
@@ -57,17 +78,13 @@
             </select>
           </div>
         </div>
-        <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-2.5 text-[11px] text-slate-300 flex items-center gap-2">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span>Loghi ufficiali di tutti i 12 partiti attivi da <strong>grafici.brunorachiele.it/img/</strong></span>
-        </div>
       </div>
 
-      <!-- PANNELLO 2: GRADIMENTO LEADER (CON FOTO REALI) -->
+      <!-- PANNELLO 2: GRADIMENTO LEADER -->
       <div id="panel-leader" class="hidden space-y-3">
         <div class="flex items-center justify-between">
-          <label class="text-[11px] font-bold uppercase text-slate-400">Gradimento Leader (Nome • % • Variazione opzionale)</label>
-          <span class="text-[10px] text-emerald-400 font-bold">Foto reali automatiche da static.brunorachiele.it/leader/</span>
+          <label class="text-[11px] font-bold uppercase text-slate-400">Gradimento Leader (Nome • % • Variazione)</label>
+          <span class="text-[10px] text-emerald-400 font-bold">Foto reali automatiche</span>
         </div>
         <textarea id="in-leader-data" rows="4" oninput="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs font-mono text-white">Giorgia Meloni&#9;43,5&#9;+0,3
 Antonio Tajani&#9;38,2&#9;+0,1
@@ -88,11 +105,11 @@ Giuseppe Conte&#9;30,8&#9;0,0</textarea>
         </div>
       </div>
 
-      <!-- PANNELLO 3: PRIME PAGINE (EDICOLA DEL GIORNO) -->
+      <!-- PANNELLO 3: PRIME PAGINE -->
       <div id="panel-primepagine" class="hidden space-y-3">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Testate da mostrare in primo piano (3 copertine)</label>
+            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Testate in primo piano (3 copertine)</label>
             <select id="sel-papers-preset" onchange="loadPapersImages()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
               <option value="corriere-della-sera,la-repubblica,la-stampa">Corriere • Repubblica • La Stampa</option>
               <option value="il-sole-24-ore,corriere-della-sera,la-repubblica">Il Sole 24 Ore • Corriere • Repubblica</option>
@@ -107,8 +124,8 @@ Giuseppe Conte&#9;30,8&#9;0,0</textarea>
           </div>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">3 Titoli caldi di apertura (uno per riga, opzionale)</label>
-          <textarea id="in-papers-headlines" rows="3" oninput="drawFrame(1)" placeholder="Inserisci i 3 temi del giorno..." class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs text-white">Manovra e fisco: le ultime novità dal Governo
+          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">3 Titoli caldi di apertura (uno per riga)</label>
+          <textarea id="in-papers-headlines" rows="3" oninput="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs text-white">Manovra e fisco: le ultime novità dal Governo
 Politica estera e scenari internazionali in primo piano
 Sondaggi e nuovi equilibri tra i partiti italiani</textarea>
         </div>
@@ -117,7 +134,7 @@ Sondaggi e nuovi equilibri tra i partiti italiani</textarea>
       <!-- PANNELLO 4: SCENARI STABILICUM -->
       <div id="panel-stabilicum" class="hidden space-y-3">
         <div class="flex items-center justify-between">
-          <label class="text-[11px] font-bold uppercase text-slate-400">Coalizioni / Liste (Nome • Voti % • Seggi Camera su 400)</label>
+          <label class="text-[11px] font-bold uppercase text-slate-400">Coalizioni / Liste (Nome • Voti % • Seggi su 400)</label>
           <span class="text-[10px] text-emerald-400 font-bold">Soglia Maggioranza: 201</span>
         </div>
         <textarea id="in-stab-data" rows="4" oninput="drawFrame(1)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs font-mono text-white">CAMPO LARGO&#9;44,5&#9;220
@@ -143,7 +160,7 @@ AZIONE&#9;1,0&#9;3</textarea>
       <!-- Controlli Testi e Stile -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-800">
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Titolo Hook (in alto sul video)</label>
+          <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Titolo Hook (in alto nella Safe Zone)</label>
           <input id="in-hook" type="text" oninput="drawFrame(1)" value="SONDAGGI POLITICI: ECCO IL PODIO DELLA SETTIMANA" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold">
         </div>
         <div>
@@ -156,7 +173,7 @@ AZIONE&#9;1,0&#9;3</textarea>
       </div>
 
       <div>
-        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Barra Call-to-Action in basso</label>
+        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Barra Call-to-Action (sopra i comandi TikTok)</label>
         <input id="in-cta" type="text" oninput="drawFrame(1)" value="Tutti i dati completi su brunorachiele.it" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs">
       </div>
 
@@ -172,18 +189,42 @@ AZIONE&#9;1,0&#9;3</textarea>
       <div id="rec-status" class="hidden text-xs font-bold p-3 rounded-xl bg-blue-950/80 border border-blue-800 text-blue-200"></div>
     </div>
 
-    <!-- Anteprima Verticale 9:16 -->
+    <!-- Anteprima Verticale 9:16 con Safe Zone TikTok -->
     <div class="lg:col-span-5 flex flex-col items-center">
-      <div class="text-[11px] font-bold uppercase text-slate-400 mb-2">Anteprima Live 9:16 (1080×1920 px)</div>
-      <div class="border-4 border-slate-800 rounded-[32px] overflow-hidden shadow-2xl bg-black" style="width: 342px; height: 608px;">
-        <canvas id="tiktok-canvas" width="1080" height="1920" style="width: 342px; height: 608px; display: block;"></canvas>
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-[11px] font-bold uppercase text-slate-400">Anteprima 9:16 (1080×1920)</span>
+        <button type="button" onclick="toggleSafeGuide()" id="btn-guide" class="text-[10px] font-bold bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2.5 py-1 rounded-md text-amber-400">
+          <i class="fa-solid fa-border-none mr-1"></i> Griglia TikTok: ON
+        </button>
       </div>
+      <div class="relative border-4 border-slate-800 rounded-[32px] overflow-hidden shadow-2xl bg-black" style="width: 342px; height: 608px;">
+        <canvas id="tiktok-canvas" width="1080" height="1920" style="width: 342px; height: 608px; display: block;"></canvas>
+        <!-- Overlay visivo Safe Zone (solo nell'anteprima, NON viene registrato nel video!) -->
+        <div id="tiktok-safe-overlay" class="pointer-events-none absolute inset-0">
+          <!-- Zona barra superiore TikTok (~250px su 1920 = 13%) -->
+          <div class="w-full bg-red-500/20 border-b border-dashed border-red-400/70 flex items-end justify-center pb-1" style="height: 13%;">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-red-200 bg-black/60 px-1.5 rounded">Barra superiore TikTok (libera)</span>
+          </div>
+          <!-- Zona pulsanti laterali destra (~130px su 1080 = 12%) -->
+          <div class="absolute right-0 top-[42%] bottom-[22%] w-[12%] bg-red-500/15 border-l border-dashed border-red-400/60 flex items-center justify-center">
+            <span class="text-[8px] font-bold text-red-200 -rotate-90 whitespace-nowrap">Icone TikTok</span>
+          </div>
+          <!-- Zona descrizione e audio in basso (~350px su 1920 = 18.2%) -->
+          <div class="absolute bottom-0 left-0 right-0 bg-red-500/20 border-t border-dashed border-red-400/70 flex items-start justify-center pt-1" style="height: 18.2%;">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-red-200 bg-black/60 px-1.5 rounded">Descrizione e comandi TikTok (libera)</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-[11px] text-slate-400 mt-2 text-center max-w-xs">
+        I bordi tratteggiati rossi mostrano dove TikTok mette i suoi tasti: tutto il video resta dentro l'area pulita e <strong>non viene registrato</strong> il tratteggio.
+      </p>
     </div>
 
   </div>
 
   <script>
     const CSV_URL = "storico_supermedia_brunorachiele.csv";
+    const BLOG_FEED_URL = "https://www.brunorachiele.it/feeds/posts/default?alt=json-in-script&max-results=15";
     const SITE_LOGO_URL = "https://static.brunorachiele.it/logo.png";
     const PARTY_LOGOS_BASE = "https://grafici.brunorachiele.it/img/";
     const LEADER_PHOTOS_BASE = "https://static.brunorachiele.it/leader/";
@@ -237,10 +278,22 @@ AZIONE&#9;1,0&#9;3</textarea>
 
     const loadedImages = {};
     let loadedPapers = [];
+    let recentBlogEntries = [];
     let currentTab = "partiti";
     let records = [];
     let selectedIndex = 0;
     let animFrameId = null;
+    let showGuide = true;
+
+    function toggleSafeGuide() {
+      showGuide = !showGuide;
+      const ov = document.getElementById("tiktok-safe-overlay");
+      const btn = document.getElementById("btn-guide");
+      ov.style.display = showGuide ? "block" : "none";
+      btn.innerHTML = showGuide
+        ? '<i class="fa-solid fa-border-none mr-1"></i> Griglia TikTok: ON'
+        : '<i class="fa-solid fa-border-none mr-1"></i> Griglia TikTok: OFF';
+    }
 
     function preloadImage(key, url, fallbackUrl) {
       return new Promise(function(resolve) {
@@ -274,6 +327,182 @@ AZIONE&#9;1,0&#9;3</textarea>
       };
     }
 
+    // Carica gli ultimi articoli di brunorachiele.it via JSONP nativo Blogger
+    function fetchRecentBlogPosts() {
+      const cbName = "brFeedCb_" + Date.now();
+      window[cbName] = function(data) {
+        try {
+          const entries = (data.feed && data.feed.entry) ? data.feed.entry : [];
+          recentBlogEntries = entries.map(function(e) {
+            let altLink = "";
+            (e.link || []).forEach(function(l) {
+              if (l.rel === "alternate") altLink = l.href;
+            });
+            return {
+              title: e.title ? e.title.$t : "",
+              url: altLink,
+              html: e.content ? e.content.$t : (e.summary ? e.summary.$t : "")
+            };
+          });
+
+          const sel = document.getElementById("sel-recent-posts");
+          sel.innerHTML = '<option value="">— Seleziona un articolo recente dal sito —</option>';
+          recentBlogEntries.forEach(function(item, idx) {
+            const opt = document.createElement("option");
+            opt.value = idx;
+            opt.textContent = item.title.slice(0, 62);
+            sel.appendChild(opt);
+          });
+        } catch (err) {}
+        delete window[cbName];
+      };
+      const s = document.createElement("script");
+      s.src = BLOG_FEED_URL + "&callback=" + cbName;
+      document.body.appendChild(s);
+    }
+
+    function onSelectRecentPost(idxStr) {
+      if (idxStr === "") return;
+      const entry = recentBlogEntries[parseInt(idxStr, 10)];
+      if (!entry) return;
+      document.getElementById("in-post-url").value = entry.url;
+      parseArticleHtmlAndPopulate(entry.title, entry.html);
+    }
+
+    async function importFromUrl() {
+      const url = document.getElementById("in-post-url").value.trim();
+      const badge = document.getElementById("import-badge");
+      if (!url) {
+        alert("Incolla prima il link di un articolo di brunorachiele.it oppure sceglilo dal menu a tendina.");
+        return;
+      }
+
+      // Controlla se è già nei post caricati dal feed
+      const found = recentBlogEntries.find(function(e) {
+        return e.url && url.indexOf(e.url.replace(/^https?:\/\//, "")) !== -1;
+      });
+      if (found) {
+        parseArticleHtmlAndPopulate(found.title, found.html);
+        return;
+      }
+
+      badge.textContent = "Lettura metadati dell'articolo in corso...";
+      badge.className = "text-[10px] text-amber-400 font-bold";
+
+      try {
+        // Estrae lo slug dall'URL Blogger per cercarlo nel feed JSONP
+        const slugMatch = url.match(/\/([a-z0-9-]+)\.html/i);
+        const queryTerm = slugMatch ? slugMatch[1].replace(/-/g, " ") : "";
+        const searchFeed = "https://www.brunorachiele.it/feeds/posts/default?alt=json-in-script&q=" + encodeURIComponent(queryTerm) + "&max-results=5";
+        const cbName = "brSearchCb_" + Date.now();
+
+        window[cbName] = function(data) {
+          const entries = (data.feed && data.feed.entry) ? data.feed.entry : [];
+          if (entries.length > 0) {
+            const e = entries[0];
+            const title = e.title ? e.title.$t : "";
+            const html = e.content ? e.content.$t : (e.summary ? e.summary.$t : "");
+            parseArticleHtmlAndPopulate(title, html);
+          } else {
+            badge.textContent = "Articolo non trovato nel feed RSS";
+            badge.className = "text-[10px] text-red-400 font-bold";
+          }
+          delete window[cbName];
+        };
+        const s = document.createElement("script");
+        s.src = searchFeed + "&callback=" + cbName;
+        document.body.appendChild(s);
+      } catch (err) {
+        badge.textContent = "Errore importazione";
+      }
+    }
+
+    function parseArticleHtmlAndPopulate(title, html) {
+      const badge = document.getElementById("import-badge");
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const lowTitle = title.toLowerCase();
+
+      // Estrae righe da eventuali tabelle HTML presenti nell'articolo
+      const extractedRows = [];
+      doc.querySelectorAll("table tr").forEach(function(tr) {
+        const cells = Array.from(tr.querySelectorAll("td, th")).map(function(c) {
+          return c.textContent.replace(/\s+/g, " ").trim();
+        }).filter(Boolean);
+        if (cells.length >= 2) extractedRows.push(cells);
+      });
+
+      // 1. Caso Prime Pagine
+      if (lowTitle.indexOf("prime pagine") !== -1 || lowTitle.indexOf("edicola") !== -1) {
+        switchTab("primepagine");
+        const listItems = Array.from(doc.querySelectorAll("li, h3, strong")).map(function(el) {
+          return el.textContent.replace(/\s+/g, " ").trim();
+        }).filter(function(t) { return t.length > 18 && t.length < 95; }).slice(0, 3);
+        if (listItems.length) {
+          document.getElementById("in-papers-headlines").value = listItems.join("\n");
+        }
+        document.getElementById("in-hook").value = title.toUpperCase().slice(0, 68);
+        badge.textContent = "✓ Importato in Prime Pagine";
+        badge.className = "text-[10px] text-emerald-400 font-bold";
+        drawFrame(1);
+        return;
+      }
+
+      // 2. Caso Stabilicum
+      if (lowTitle.indexOf("stabilicum") !== -1 || lowTitle.indexOf("seggi") !== -1) {
+        switchTab("stabilicum");
+        const stabLines = [];
+        extractedRows.forEach(function(cells) {
+          const name = cells[0];
+          const nums = cells.slice(1).map(function(c) { return c.replace("%", "").trim(); }).filter(function(c) {
+            return /^[\d.,]+$/.test(c);
+          });
+          if (name && nums.length >= 2 && !/coalizione|lista|partito/i.test(name)) {
+            stabLines.push(name.toUpperCase() + "\t" + nums[0] + "\t" + nums[1]);
+          }
+        });
+        if (stabLines.length >= 2) {
+          document.getElementById("in-stab-data").value = stabLines.slice(0, 4).join("\n");
+        }
+        document.getElementById("in-hook").value = title.toUpperCase().slice(0, 68);
+        badge.textContent = "✓ Dati Stabilicum estratti dall'articolo";
+        badge.className = "text-[10px] text-emerald-400 font-bold";
+        drawFrame(1);
+        return;
+      }
+
+      // 3. Caso Gradimento Leader
+      const leaderNames = Object.keys(LEADER_FILES);
+      const hasLeader = leaderNames.some(function(lk) { return html.toLowerCase().indexOf(lk) !== -1; }) &&
+                        (lowTitle.indexOf("leader") !== -1 || lowTitle.indexOf("gradimento") !== -1 || lowTitle.indexOf("fiducia") !== -1);
+      if (hasLeader) {
+        switchTab("leader");
+        const leaderLines = [];
+        extractedRows.forEach(function(cells) {
+          const name = cells[0];
+          const valCell = cells[1] ? cells[1].replace("%", "").trim() : "";
+          const diffCell = cells[2] ? cells[2].replace("%", "").trim() : "0,0";
+          if (name && /^[\d.,]+$/.test(valCell)) {
+            leaderLines.push(name + "\t" + valCell + "\t" + diffCell);
+          }
+        });
+        if (leaderLines.length >= 2) {
+          document.getElementById("in-leader-data").value = leaderLines.slice(0, 4).join("\n");
+        }
+        document.getElementById("in-hook").value = title.toUpperCase().slice(0, 68);
+        badge.textContent = "✓ Gradimento Leader estratto dall'articolo";
+        badge.className = "text-[10px] text-emerald-400 font-bold";
+        drawFrame(1);
+        return;
+      }
+
+      // 4. Default: Supermedia Partiti
+      switchTab("partiti");
+      document.getElementById("in-hook").value = title.toUpperCase().slice(0, 68);
+      badge.textContent = "✓ Titolo importato per la Supermedia";
+      badge.className = "text-[10px] text-emerald-400 font-bold";
+      drawFrame(1);
+    }
+
     async function loadPapersImages() {
       const slugs = document.getElementById("sel-papers-preset").value.split(",");
       const list = [];
@@ -298,10 +527,10 @@ AZIONE&#9;1,0&#9;3</textarea>
     async function init() {
       const today = getTodayItalyInfo();
       document.getElementById("in-papers-date").value = "EDICOLA DEL " + today.it;
+      fetchRecentBlogPosts();
 
       const promises = [preloadImage("site_logo", SITE_LOGO_URL)];
 
-      // Precarica loghi di tutti i 12 partiti
       ACTIVE_KEYS.forEach(function(k) {
         const cfg = PARTY_CONFIG[k];
         if (cfg.logo) {
@@ -309,7 +538,6 @@ AZIONE&#9;1,0&#9;3</textarea>
         }
       });
 
-      // Precarica foto reali di tutti i leader
       Object.keys(LEADER_FILES).forEach(function(lk) {
         const lf = LEADER_FILES[lk];
         promises.push(preloadImage("leader_" + lk, LEADER_PHOTOS_BASE + lf.file));
@@ -369,7 +597,7 @@ AZIONE&#9;1,0&#9;3</textarea>
         onPartitiModeChange();
       } else if (tab === "primepagine") {
         document.getElementById("in-hook").value = "LE PRIME PAGINE DEI GIORNALI DI OGGI IN EDICOLA";
-        document.getElementById("in-cta").value = "Sfoglia tutte le 21 copertine HD su brunorachiele.it";
+        document.getElementById("in-cta").value = "Sfoglia tutte le copertine HD su brunorachiele.it";
       } else if (tab === "leader") {
         document.getElementById("in-hook").value = "CHI È IL LEADER PIÙ APPREZZATO DAGLI ITALIANI?";
         document.getElementById("in-cta").value = "Classifica completa del gradimento su brunorachiele.it";
@@ -428,17 +656,20 @@ AZIONE&#9;1,0&#9;3</textarea>
       const words = text.split(" ");
       let line = "";
       let curY = y;
+      let linesCount = 1;
       for (let n = 0; n < words.length; n++) {
         const testLine = line + words[n] + " ";
         if (ctx.measureText(testLine).width > maxWidth && n > 0) {
           ctx.fillText(line.trim(), x, curY);
           line = words[n] + " ";
           curY += lineHeight;
+          linesCount++;
+          if (linesCount > 3) break;
         } else {
           line = testLine;
         }
       }
-      ctx.fillText(line.trim(), x, curY);
+      if (linesCount <= 3) ctx.fillText(line.trim(), x, curY);
       return curY;
     }
 
@@ -448,12 +679,11 @@ AZIONE&#9;1,0&#9;3</textarea>
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
-    // Disegna medaglione circolare: mode="logo" (con margine su fondo bianco) oppure mode="photo" (ritratto a pieno cerchio)
     function drawCircularAvatar(ctx, cx, cy, radius, img, fallbackText, bgColor, borderColor, mode) {
       ctx.save();
       ctx.shadowColor = "rgba(0,0,0,0.32)";
-      ctx.shadowBlur = 14;
-      ctx.shadowOffsetY = 5;
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 4;
 
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
@@ -468,7 +698,6 @@ AZIONE&#9;1,0&#9;3</textarea>
 
       if (img) {
         if (mode === "photo") {
-          // Ritratto leader centrato in alto (cover crop)
           const r = radius - 3;
           const d = r * 2;
           const aspect = img.width / img.height;
@@ -478,7 +707,7 @@ AZIONE&#9;1,0&#9;3</textarea>
             offsetX = -(drawW - d) / 2;
           } else {
             drawH = d / aspect;
-            offsetY = -(drawH - d) * 0.15; // mantiene il volto centrato
+            offsetY = -(drawH - d) * 0.15;
           }
           ctx.drawImage(img, cx - r + offsetX, cy - r + offsetY, drawW, drawH);
         } else {
@@ -497,7 +726,7 @@ AZIONE&#9;1,0&#9;3</textarea>
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.strokeStyle = borderColor || "#ffffff";
-      ctx.lineWidth = 5;
+      ctx.lineWidth = 4;
       ctx.stroke();
     }
 
@@ -510,13 +739,13 @@ AZIONE&#9;1,0&#9;3</textarea>
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, W, H);
 
-        const glow1 = ctx.createRadialGradient(180, 260, 20, 180, 260, 520);
+        const glow1 = ctx.createRadialGradient(220, 420, 20, 220, 420, 500);
         glow1.addColorStop(0, "rgba(37, 99, 235, 0.28)");
         glow1.addColorStop(1, "rgba(37, 99, 235, 0)");
         ctx.fillStyle = glow1;
         ctx.fillRect(0, 0, W, H);
 
-        const glow2 = ctx.createRadialGradient(900, 1450, 20, 900, 1450, 520);
+        const glow2 = ctx.createRadialGradient(840, 1280, 20, 840, 1280, 480);
         glow2.addColorStop(0, "rgba(14, 165, 233, 0.20)");
         glow2.addColorStop(1, "rgba(14, 165, 233, 0)");
         ctx.fillStyle = glow2;
@@ -534,18 +763,18 @@ AZIONE&#9;1,0&#9;3</textarea>
         ctx.fillStyle = "#f1f5f9";
         ctx.fillRect(0, 0, W, H);
         ctx.fillStyle = "#0b4a9f";
-        ctx.fillRect(0, 0, W, 520);
+        ctx.fillRect(0, 0, W, 620);
       }
     }
 
-    function drawLockedTeaserCard(ctx, y, isDark, labelText, subText, alpha) {
+    function drawLockedTeaserCard(ctx, x, y, w, h, isDark, labelText, subText, alpha) {
       ctx.save();
       ctx.globalAlpha = alpha;
-      ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.72)" : "#ffffff";
-      roundRect(ctx, 64, y, 952, 150, 26);
+      ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.78)" : "#ffffff";
+      roundRect(ctx, x, y, w, h, 22);
       ctx.fill();
 
-      ctx.setLineDash([12, 8]);
+      ctx.setLineDash([10, 8]);
       ctx.strokeStyle = isDark ? "#38bdf8" : "#0b4a9f";
       ctx.lineWidth = 3;
       ctx.stroke();
@@ -553,21 +782,21 @@ AZIONE&#9;1,0&#9;3</textarea>
 
       ctx.fillStyle = "#2563eb";
       ctx.beginPath();
-      ctx.arc(146, y + 75, 40, 0, Math.PI * 2);
+      ctx.arc(x + 68, y + h / 2, 32, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = "#ffffff";
-      ctx.font = "900 34px sans-serif";
+      ctx.font = "900 28px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("🔒", 146, y + 86);
+      ctx.fillText("🔒", x + 68, y + h / 2 + 10);
       ctx.textAlign = "left";
 
       ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-      ctx.font = "900 33px sans-serif";
-      ctx.fillText(labelText, 212, y + 68);
+      ctx.font = "900 28px sans-serif";
+      ctx.fillText(labelText, x + 122, y + h / 2 - 6);
 
       ctx.fillStyle = isDark ? "#38bdf8" : "#0b4a9f";
-      ctx.font = "700 26px sans-serif";
-      ctx.fillText(subText, 212, y + 108);
+      ctx.font = "700 22px sans-serif";
+      ctx.fillText(subText, x + 122, y + h / 2 + 28);
       ctx.restore();
     }
 
@@ -579,28 +808,35 @@ AZIONE&#9;1,0&#9;3</textarea>
       const hookText = document.getElementById("in-hook").value.trim() || "SONDAGGI POLITICI";
       const ctaText = document.getElementById("in-cta").value.trim() || "brunorachiele.it";
 
+      // SAFE ZONE TIKTOK:
+      // Top sicuro >= 275px (sotto barra Seguiti/Per te)
+      // Sinistra sicura = 64px, Destra sicura = 955px (lascia 125px a destra per icone TikTok)
+      // Fondo sicuro <= 1560px (sopra descrizione e comandi audio)
+      const SAFE_X = 64;
+      const SAFE_W = 886; // da x=64 a x=950
+
       drawBackgroundStudio(ctx, W, H, isDark);
 
-      // Header Brand con Logo reale static.brunorachiele.it/logo.png
-      ctx.fillStyle = isDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.16)";
-      roundRect(ctx, 64, 110, 445, 72, 36);
+      // 1. HEADER BRAND (Y = 275, ben sotto la barra superiore di TikTok)
+      ctx.fillStyle = isDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.18)";
+      roundRect(ctx, SAFE_X, 275, 415, 64, 32);
       ctx.fill();
 
       if (loadedImages["site_logo"]) {
         ctx.save();
         ctx.beginPath();
-        ctx.arc(106, 146, 24, 0, Math.PI * 2);
+        ctx.arc(SAFE_X + 36, 307, 22, 0, Math.PI * 2);
         ctx.fillStyle = "#ffffff";
         ctx.fill();
         ctx.clip();
-        ctx.drawImage(loadedImages["site_logo"], 85, 125, 42, 42);
+        ctx.drawImage(loadedImages["site_logo"], SAFE_X + 17, 288, 38, 38);
         ctx.restore();
       }
       ctx.fillStyle = "#ffffff";
-      ctx.font = "900 28px sans-serif";
-      ctx.fillText("BRUNORACHIELE.IT", 144, 156);
+      ctx.font = "900 25px sans-serif";
+      ctx.fillText("BRUNORACHIELE.IT", SAFE_X + 70, 316);
 
-      // Badge Live a destra
+      // Badge Live a destra dentro SAFE_W
       let badgeRight = "SUPERMEDIA";
       if (currentTab === "partiti" && records[selectedIndex]) {
         badgeRight = "SUPERMEDIA • " + records[selectedIndex].data_it;
@@ -613,25 +849,25 @@ AZIONE&#9;1,0&#9;3</textarea>
       }
 
       ctx.fillStyle = "#dc2626";
-      roundRect(ctx, 526, 110, 490, 72, 36);
+      roundRect(ctx, SAFE_X + 430, 275, SAFE_W - 430, 64, 32);
       ctx.fill();
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(562, 146, 8, 0, Math.PI * 2);
+      ctx.arc(SAFE_X + 458, 307, 7, 0, Math.PI * 2);
       ctx.fill();
-      ctx.font = "900 24px sans-serif";
-      ctx.fillText(badgeRight.slice(0, 27), 584, 155);
+      ctx.font = "900 21px sans-serif";
+      ctx.fillText(badgeRight.slice(0, 26), SAFE_X + 476, 315);
 
-      // Titolo Hook
+      // 2. TITOLO HOOK (Y = 405)
       ctx.fillStyle = "#ffffff";
-      ctx.font = "900 58px sans-serif";
-      const endTitleY = wrapText(ctx, hookText.toUpperCase(), 64, 265, 952, 72);
+      ctx.font = "900 48px sans-serif";
+      const endTitleY = wrapText(ctx, hookText.toUpperCase(), SAFE_X, 405, SAFE_W, 58);
 
-      const startY = endTitleY + 56;
+      const startY = endTitleY + 44;
       ctx.fillStyle = "#f59e0b";
-      ctx.fillRect(64, startY - 26, 160, 8);
+      ctx.fillRect(SAFE_X, startY - 22, 140, 7);
 
-      // === 1. SONDAGGI PARTITI (CON LOGHI REALI) ===
+      // === CONTENUTO 1: SONDAGGI PARTITI ===
       if (currentTab === "partiti" && records[selectedIndex]) {
         const cur = records[selectedIndex];
         const prev = selectedIndex > 0 ? records[selectedIndex - 1] : null;
@@ -664,63 +900,62 @@ AZIONE&#9;1,0&#9;3</textarea>
         }
 
         const maxVal = Math.max.apply(null, items.map(function(it) { return it.val; }).concat([30]));
-        const cardH = submode === "duello" ? 245 : 205;
-        const gap = 26;
+        const cardH = submode === "duello" ? 210 : 172;
+        const gap = 20;
 
         items.forEach(function(it, idx) {
           const localP = Math.max(0, Math.min(1, (progress - idx * 0.12) / 0.55));
           const ease = 1 - Math.pow(1 - localP, 3);
           const y = startY + idx * (cardH + gap);
 
-          ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.88)" : "#ffffff";
-          roundRect(ctx, 64, y, 952, cardH, 28);
+          ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.9)" : "#ffffff";
+          roundRect(ctx, SAFE_X, y, SAFE_W, cardH, 24);
           ctx.fill();
-
           ctx.strokeStyle = isDark ? "rgba(56, 189, 248, 0.25)" : "#cbd5e1";
           ctx.lineWidth = 3;
           ctx.stroke();
 
           ctx.fillStyle = it.color;
-          roundRect(ctx, 64, y, 18, cardH, 10);
+          roundRect(ctx, SAFE_X, y, 16, cardH, 8);
           ctx.fill();
 
-          drawCircularAvatar(ctx, 156, y + cardH / 2, 54, it.img, it.sigla, it.color, it.color, "logo");
+          drawCircularAvatar(ctx, SAFE_X + 78, y + cardH / 2, 46, it.img, it.sigla, it.color, it.color, "logo");
 
           ctx.fillStyle = idx === 0 ? "#f59e0b" : (isDark ? "#334155" : "#e2e8f0");
-          roundRect(ctx, 234, y + 32, 56, 34, 10);
+          roundRect(ctx, SAFE_X + 144, y + 26, 48, 30, 8);
           ctx.fill();
           ctx.fillStyle = idx === 0 ? "#0f172a" : (isDark ? "#ffffff" : "#0f172a");
-          ctx.font = "900 20px sans-serif";
+          ctx.font = "900 18px sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText("#" + (idx + 1), 262, y + 55);
+          ctx.fillText("#" + (idx + 1), SAFE_X + 168, y + 47);
           ctx.textAlign = "left";
 
           ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-          ctx.font = "900 36px sans-serif";
-          ctx.fillText(it.name, 304, y + 60);
+          ctx.font = "900 31px sans-serif";
+          ctx.fillText(it.name, SAFE_X + 204, y + 51);
 
-          const barY = y + cardH - 64;
-          const barMaxW = 460;
+          const barY = y + cardH - 54;
+          const barMaxW = 430;
           ctx.fillStyle = isDark ? "#1e293b" : "#e2e8f0";
-          roundRect(ctx, 234, barY, barMaxW, 24, 12);
+          roundRect(ctx, SAFE_X + 144, barY, barMaxW, 20, 10);
           ctx.fill();
 
           ctx.fillStyle = (it.color === "#0f294a" && isDark) ? "#38bdf8" : it.color;
-          roundRect(ctx, 234, barY, Math.max(18, (it.val / maxVal) * barMaxW * ease), 24, 12);
+          roundRect(ctx, SAFE_X + 144, barY, Math.max(16, (it.val / maxVal) * barMaxW * ease), 20, 10);
           ctx.fill();
 
           ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-          ctx.font = "900 56px sans-serif";
+          ctx.font = "900 48px sans-serif";
           ctx.textAlign = "right";
-          ctx.fillText((it.val * ease).toFixed(2).replace(".", ",") + "%", 982, y + 84);
+          ctx.fillText((it.val * ease).toFixed(2).replace(".", ",") + "%", SAFE_X + SAFE_W - 26, y + 72);
 
           let diffTxt = "= 0,00";
           let diffCol = isDark ? "#94a3b8" : "#64748b";
           if (it.diff > 0) { diffTxt = "▲ +" + it.diff.toFixed(2).replace(".", ","); diffCol = "#22c55e"; }
           else if (it.diff < 0) { diffTxt = "▼ " + it.diff.toFixed(2).replace(".", ","); diffCol = "#ef4444"; }
           ctx.fillStyle = diffCol;
-          ctx.font = "800 32px sans-serif";
-          ctx.fillText(diffTxt, 982, y + cardH - 40);
+          ctx.font = "800 28px sans-serif";
+          ctx.fillText(diffTxt, SAFE_X + SAFE_W - 26, y + cardH - 34);
           ctx.textAlign = "left";
         });
 
@@ -728,7 +963,10 @@ AZIONE&#9;1,0&#9;3</textarea>
         const lockAlpha = Math.max(0, Math.min(1, (progress - 0.45) / 0.4));
         drawLockedTeaserCard(
           ctx,
+          SAFE_X,
           lockY,
+          SAFE_W,
+          126,
           isDark,
           "Altri 9 partiti e variazioni settimanali",
           "Consulta la Supermedia integrale su brunorachiele.it",
@@ -736,7 +974,7 @@ AZIONE&#9;1,0&#9;3</textarea>
         );
       }
 
-      // === 2. GRADIMENTO LEADER (CON FOTO REALI DA static.brunorachiele.it/leader/) ===
+      // === CONTENUTO 2: GRADIMENTO LEADER ===
       if (currentTab === "leader") {
         const raw = document.getElementById("in-leader-data").value.trim();
         const showLock = document.getElementById("sel-leader-lock").value === "yes";
@@ -747,7 +985,6 @@ AZIONE&#9;1,0&#9;3</textarea>
           const diff = p[2] ? parseFloat(p[2].replace(",", ".").replace("%", "")) : 0;
           if (isNaN(val)) return null;
 
-          // Riconoscimento automatico foto leader dal cognome
           const lowName = p[0].toLowerCase();
           let matchedKey = null;
           Object.keys(LEADER_FILES).forEach(function(lk) {
@@ -768,58 +1005,58 @@ AZIONE&#9;1,0&#9;3</textarea>
         }).filter(Boolean).slice(0, 4);
 
         const maxVal = Math.max.apply(null, leaders.map(function(l) { return l.val; }).concat([50]));
-        const cardH = 195;
-        const gap = 22;
+        const cardH = 156;
+        const gap = 16;
 
         leaders.forEach(function(ld, idx) {
           const localP = Math.max(0, Math.min(1, (progress - idx * 0.1) / 0.5));
           const ease = 1 - Math.pow(1 - localP, 3);
           const y = startY + idx * (cardH + gap);
 
-          ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.88)" : "#ffffff";
-          roundRect(ctx, 64, y, 952, cardH, 26);
+          ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.9)" : "#ffffff";
+          roundRect(ctx, SAFE_X, y, SAFE_W, cardH, 22);
           ctx.fill();
           ctx.strokeStyle = isDark ? "rgba(56, 189, 248, 0.25)" : "#cbd5e1";
           ctx.lineWidth = 3;
           ctx.stroke();
 
-          drawCircularAvatar(ctx, 152, y + cardH / 2, 54, ld.img, ld.initials, ld.color, ld.color, "photo");
+          drawCircularAvatar(ctx, SAFE_X + 74, y + cardH / 2, 44, ld.img, ld.initials, ld.color, ld.color, "photo");
 
           ctx.fillStyle = idx === 0 ? "#f59e0b" : (isDark ? "#334155" : "#e2e8f0");
-          roundRect(ctx, 228, y + 32, 54, 32, 10);
+          roundRect(ctx, SAFE_X + 138, y + 24, 46, 28, 8);
           ctx.fill();
           ctx.fillStyle = idx === 0 ? "#0f172a" : (isDark ? "#ffffff" : "#0f172a");
-          ctx.font = "900 19px sans-serif";
+          ctx.font = "900 17px sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText("#" + (idx + 1), 255, y + 54);
+          ctx.fillText("#" + (idx + 1), SAFE_X + 161, y + 44);
           ctx.textAlign = "left";
 
           ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-          ctx.font = "900 36px sans-serif";
-          ctx.fillText(ld.name, 296, y + 58);
+          ctx.font = "900 31px sans-serif";
+          ctx.fillText(ld.name, SAFE_X + 196, y + 48);
 
-          const barY = y + cardH - 60;
-          const barMaxW = 465;
+          const barY = y + cardH - 48;
+          const barMaxW = 435;
           ctx.fillStyle = isDark ? "#1e293b" : "#e2e8f0";
-          roundRect(ctx, 228, barY, barMaxW, 22, 11);
+          roundRect(ctx, SAFE_X + 138, barY, barMaxW, 18, 9);
           ctx.fill();
 
           ctx.fillStyle = (ld.color === "#0f294a" && isDark) ? "#38bdf8" : ld.color;
-          roundRect(ctx, 228, barY, Math.max(16, (ld.val / maxVal) * barMaxW * ease), 22, 11);
+          roundRect(ctx, SAFE_X + 138, barY, Math.max(16, (ld.val / maxVal) * barMaxW * ease), 18, 9);
           ctx.fill();
 
           ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-          ctx.font = "900 54px sans-serif";
+          ctx.font = "900 46px sans-serif";
           ctx.textAlign = "right";
-          ctx.fillText((ld.val * ease).toFixed(1).replace(".", ",") + "%", 980, y + 80);
+          ctx.fillText((ld.val * ease).toFixed(1).replace(".", ",") + "%", SAFE_X + SAFE_W - 24, y + 66);
 
           let diffTxt = "= 0,0";
           let diffCol = isDark ? "#94a3b8" : "#64748b";
           if (ld.diff > 0) { diffTxt = "▲ +" + ld.diff.toFixed(1).replace(".", ","); diffCol = "#22c55e"; }
           else if (ld.diff < 0) { diffTxt = "▼ " + ld.diff.toFixed(1).replace(".", ","); diffCol = "#ef4444"; }
           ctx.fillStyle = diffCol;
-          ctx.font = "800 30px sans-serif";
-          ctx.fillText(diffTxt, 980, y + cardH - 38);
+          ctx.font = "800 26px sans-serif";
+          ctx.fillText(diffTxt, SAFE_X + SAFE_W - 24, y + cardH - 30);
           ctx.textAlign = "left";
         });
 
@@ -828,7 +1065,10 @@ AZIONE&#9;1,0&#9;3</textarea>
           const lockAlpha = Math.max(0, Math.min(1, (progress - 0.5) / 0.4));
           drawLockedTeaserCard(
             ctx,
+            SAFE_X,
             lockY,
+            SAFE_W,
+            116,
             isDark,
             "Tutti gli altri leader politici",
             "Consulta la rilevazione integrale su brunorachiele.it",
@@ -837,88 +1077,91 @@ AZIONE&#9;1,0&#9;3</textarea>
         }
       }
 
-      // === 3. PRIME PAGINE (EDICOLA DEL GIORNO) ===
+      // === CONTENUTO 3: PRIME PAGINE ===
       if (currentTab === "primepagine") {
         const papers = loadedPapers.slice(0, 3);
-        const cardW = 296;
-        const cardGap = 32;
-        const coverH = 420;
+        const cardGap = 22;
+        const cardW = Math.floor((SAFE_W - cardGap * 2) / 3);
+        const coverH = 365;
 
         papers.forEach(function(p, idx) {
           const localP = Math.max(0, Math.min(1, (progress - idx * 0.14) / 0.55));
           const ease = 1 - Math.pow(1 - localP, 3);
-          const x = 64 + idx * (cardW + cardGap);
-          const yOffset = (1 - ease) * 60;
+          const x = SAFE_X + idx * (cardW + cardGap);
+          const yOffset = (1 - ease) * 45;
           const y = startY + yOffset;
 
           ctx.save();
           ctx.globalAlpha = ease;
           ctx.fillStyle = isDark ? "#1e293b" : "#ffffff";
-          roundRect(ctx, x, y, cardW, coverH + 74, 20);
+          roundRect(ctx, x, y, cardW, coverH + 62, 18);
           ctx.fill();
 
           if (p.img) {
             ctx.save();
-            roundRect(ctx, x + 10, y + 10, cardW - 20, coverH - 10, 14);
+            roundRect(ctx, x + 8, y + 8, cardW - 16, coverH - 8, 12);
             ctx.clip();
-            ctx.drawImage(p.img, x + 10, y + 10, cardW - 20, coverH - 10);
+            ctx.drawImage(p.img, x + 8, y + 8, cardW - 16, coverH - 8);
             ctx.restore();
           } else {
             ctx.fillStyle = "#334155";
-            roundRect(ctx, x + 10, y + 10, cardW - 20, coverH - 10, 14);
+            roundRect(ctx, x + 8, y + 8, cardW - 16, coverH - 8, 12);
             ctx.fill();
           }
 
           ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-          ctx.font = "800 22px sans-serif";
+          ctx.font = "800 20px sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText(p.title, x + cardW / 2, y + coverH + 44);
+          ctx.fillText(p.title, x + cardW / 2, y + coverH + 38);
           ctx.textAlign = "left";
           ctx.restore();
         });
 
         const hlRaw = document.getElementById("in-papers-headlines").value.trim();
         const headlines = hlRaw.split(/\r?\n/).map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 3);
-        let boxY = startY + coverH + 105;
+        let boxY = startY + coverH + 84;
 
         if (headlines.length) {
           ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.9)" : "#ffffff";
-          roundRect(ctx, 64, boxY, 952, 340, 24);
+          roundRect(ctx, SAFE_X, boxY, SAFE_W, 275, 22);
           ctx.fill();
           ctx.strokeStyle = isDark ? "rgba(245, 158, 11, 0.45)" : "#cbd5e1";
           ctx.lineWidth = 3;
           ctx.stroke();
 
           ctx.fillStyle = "#f59e0b";
-          ctx.font = "900 24px sans-serif";
-          ctx.fillText("I TEMI PRINCIPALI IN APERTURA OGGI", 98, boxY + 48);
+          ctx.font = "900 22px sans-serif";
+          ctx.fillText("I TEMI PRINCIPALI IN APERTURA OGGI", SAFE_X + 28, boxY + 42);
 
           headlines.forEach(function(hl, hIdx) {
-            const hy = boxY + 105 + hIdx * 82;
+            const hy = boxY + 92 + hIdx * 68;
             ctx.fillStyle = "#2563eb";
             ctx.beginPath();
-            ctx.arc(108, hy - 8, 9, 0, Math.PI * 2);
+            ctx.arc(SAFE_X + 36, hy - 7, 8, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = isDark ? "#f8fafc" : "#0f172a";
-            ctx.font = "700 28px sans-serif";
-            const shortHl = hl.length > 52 ? hl.slice(0, 51) + "…" : hl;
-            ctx.fillText(shortHl, 134, hy);
+            ctx.font = "700 25px sans-serif";
+            const shortHl = hl.length > 48 ? hl.slice(0, 47) + "…" : hl;
+            ctx.fillText(shortHl, SAFE_X + 58, hy);
           });
-          boxY += 365;
+          boxY += 295;
         }
 
         drawLockedTeaserCard(
           ctx,
-          Math.min(boxY, 1510),
+          SAFE_X,
+          Math.min(boxY, 1320),
+          SAFE_W,
+          115,
           isDark,
-          "+ Altre 18 prime pagine italiane ed estere",
+          "+ Altre prime pagine italiane ed estere",
           "Ingrandisci ogni quotidiano HD su brunorachiele.it",
           1
         );
       }
 
-      // === 4. SCENARI STABILICUM ===
+      // === CONTENUTO 4: SCENARI STABILICUM ===
       if (currentTab === "stabilicum") {
         const raw = document.getElementById("in-stab-data").value.trim();
         const stabColors = ["#0b4a9f", "#dc2626", "#475569", "#2563eb", "#16a34a"];
@@ -937,8 +1180,8 @@ AZIONE&#9;1,0&#9;3</textarea>
           };
         }).filter(Boolean).slice(0, 4);
 
-        const cardH = 225;
-        const gap = 24;
+        const cardH = 182;
+        const gap = 18;
 
         rows.forEach(function(rw, idx) {
           const localP = Math.max(0, Math.min(1, (progress - idx * 0.12) / 0.5));
@@ -946,12 +1189,12 @@ AZIONE&#9;1,0&#9;3</textarea>
           const y = startY + idx * (cardH + gap);
 
           ctx.fillStyle = isDark ? "rgba(15, 23, 42, 0.9)" : "#ffffff";
-          roundRect(ctx, 64, y, 952, cardH, 26);
+          roundRect(ctx, SAFE_X, y, SAFE_W, cardH, 22);
           ctx.fill();
 
           if (rw.majority) {
             ctx.strokeStyle = "#22c55e";
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 4;
             ctx.stroke();
           } else {
             ctx.strokeStyle = isDark ? "rgba(56, 189, 248, 0.25)" : "#cbd5e1";
@@ -960,70 +1203,70 @@ AZIONE&#9;1,0&#9;3</textarea>
           }
 
           ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-          ctx.font = "900 34px sans-serif";
-          ctx.fillText(rw.name, 102, y + 66);
+          ctx.font = "900 30px sans-serif";
+          ctx.fillText(rw.name, SAFE_X + 28, y + 54);
 
           ctx.fillStyle = isDark ? "#1e293b" : "#f1f5f9";
-          roundRect(ctx, 102, y + 86, 180, 44, 12);
+          roundRect(ctx, SAFE_X + 28, y + 70, 165, 38, 10);
           ctx.fill();
           ctx.fillStyle = isDark ? "#38bdf8" : "#0b4a9f";
-          ctx.font = "800 26px sans-serif";
-          ctx.fillText("Voti: " + rw.votes.toFixed(1).replace(".", ",") + "%", 118, y + 116);
+          ctx.font = "800 23px sans-serif";
+          ctx.fillText("Voti: " + rw.votes.toFixed(1).replace(".", ",") + "%", SAFE_X + 42, y + 96);
 
           if (rw.majority) {
             ctx.fillStyle = "#16a34a";
-            roundRect(ctx, 298, y + 86, 265, 44, 12);
+            roundRect(ctx, SAFE_X + 206, y + 70, 235, 38, 10);
             ctx.fill();
             ctx.fillStyle = "#ffffff";
-            ctx.font = "900 22px sans-serif";
-            ctx.fillText("✓ MAGGIORANZA", 322, y + 116);
+            ctx.font = "900 20px sans-serif";
+            ctx.fillText("✓ MAGGIORANZA", SAFE_X + 226, y + 96);
           }
 
           const dispSeats = Math.round(rw.seats * ease);
           ctx.fillStyle = rw.majority ? "#22c55e" : (isDark ? "#ffffff" : "#0f172a");
-          ctx.font = "900 62px sans-serif";
+          ctx.font = "900 54px sans-serif";
           ctx.textAlign = "right";
-          ctx.fillText(dispSeats, 980, y + 86);
+          ctx.fillText(dispSeats, SAFE_X + SAFE_W - 26, y + 72);
           ctx.fillStyle = isDark ? "#94a3b8" : "#64748b";
-          ctx.font = "700 24px sans-serif";
-          ctx.fillText("seggi su 400", 980, y + 120);
+          ctx.font = "700 21px sans-serif";
+          ctx.fillText("seggi su 400", SAFE_X + SAFE_W - 26, y + 102);
           ctx.textAlign = "left";
 
-          const barX = 102;
-          const barY = y + cardH - 54;
-          const barMaxW = 878;
+          const barX = SAFE_X + 28;
+          const barY = y + cardH - 44;
+          const barMaxW = SAFE_W - 56;
           ctx.fillStyle = isDark ? "#1e293b" : "#e2e8f0";
-          roundRect(ctx, barX, barY, barMaxW, 24, 12);
+          roundRect(ctx, barX, barY, barMaxW, 20, 10);
           ctx.fill();
 
           const fillW = Math.max(14, (rw.seats / 400) * barMaxW * ease);
           ctx.fillStyle = rw.majority ? "#22c55e" : (rw.color === "#0b4a9f" && isDark ? "#38bdf8" : rw.color);
-          roundRect(ctx, barX, barY, fillW, 24, 12);
+          roundRect(ctx, barX, barY, fillW, 20, 10);
           ctx.fill();
 
           const threshX = barX + (201 / 400) * barMaxW;
           ctx.fillStyle = "#f59e0b";
-          ctx.fillRect(threshX - 2, barY - 8, 4, 40);
+          ctx.fillRect(threshX - 2, barY - 6, 4, 32);
         });
 
-        const noteY = startY + rows.length * (cardH + gap) + 20;
+        const noteY = startY + rows.length * (cardH + gap) + 18;
         ctx.fillStyle = "#f59e0b";
-        ctx.font = "800 26px sans-serif";
-        ctx.fillText("▲ Linea gialla: Soglia maggioranza assoluta (201 seggi) • Premio al 42%", 64, noteY);
+        ctx.font = "800 23px sans-serif";
+        ctx.fillText("▲ Linea gialla: Soglia maggioranza (201 seggi) • Premio al 42%", SAFE_X, noteY);
       }
 
-      // Footer Call-to-Action stile sottopancia TG
-      const ctaGrad = ctx.createLinearGradient(64, 1700, 1016, 1788);
+      // 3. FOOTER CALL-TO-ACTION (Y = 1465, ben sopra la zona descrizione/audio di TikTok)
+      const ctaGrad = ctx.createLinearGradient(SAFE_X, 1465, SAFE_X + SAFE_W, 1545);
       ctaGrad.addColorStop(0, "#0b4a9f");
       ctaGrad.addColorStop(1, "#2563eb");
       ctx.fillStyle = ctaGrad;
-      roundRect(ctx, 64, 1700, 952, 88, 24);
+      roundRect(ctx, SAFE_X, 1465, SAFE_W, 80, 22);
       ctx.fill();
 
       ctx.fillStyle = "#ffffff";
-      ctx.font = "900 32px sans-serif";
+      ctx.font = "900 28px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(ctaText + "  →", W / 2, 1755);
+      ctx.fillText(ctaText + "  →", SAFE_X + SAFE_W / 2, 1515);
       ctx.textAlign = "left";
     }
 
